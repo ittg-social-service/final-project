@@ -18,4 +18,8 @@ class Student extends Model
   {
     return $this->belongsToMany('App\ActivityTutor')->withPivot('group_id', 'file');;
   }
+  public function career()
+  {
+    return $this->belongsTo('App\Career');
+  }
 }

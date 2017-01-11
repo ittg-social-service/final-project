@@ -33,7 +33,7 @@
             <tr>
               <td>{{$group->id}}</td>
               <td>{{$group->key}}</td>
-              <td>{{$group->periodo->period}}</td>
+              <td>--</td>
               <td>
                 <!-- Dropdown Trigger -->
                 <a class='dropdown-button btn  blue darken-4' href='' data-activates='dropdown{{$group->id}}'>Ver opciones</a>
