@@ -16,11 +16,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-<<<<<<< HEAD
+
 Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], function () {
-=======
-Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
->>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
     Route::get('home','Student\HomeController@index');
 
     Route::get('activity/{id}/homework/{id2}','Student\ActivitiesController@show');
@@ -33,11 +30,9 @@ Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
     ]);
 });
 
-<<<<<<< HEAD
+
 Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], function () {
-=======
-Route::group(['prefix' => 'teacher','middleware'=>['auth']], function () {
->>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
+
     Route::get('home','Teacher\HomeController@index');
     //Route::get('group/pdf/{id}','TestController@Makepdf');
     Route::get('group/{id}/pdf','Teacher\PdfsController@makepdf');
@@ -69,10 +64,10 @@ Route::group(['prefix' => 'jefe-departamento','middleware' => ['auth', 'role:dep
       Route::get('crear',  'HeadOfDepartmentController@createStudent');
       Route::get('editar',  'HeadOfDepartmentController@updateStudent');
     });
-    Route::group(['prefix' => 'tutores'], function () { 
+    Route::group(['prefix' => 'tutores'], function () {
       Route::get('/',  'HeadOfDepartmentController@tutors');
       Route::get('crear',  'HeadOfDepartmentController@createTutor');
-      
+
     });
     Route::get('asignaciones',  'HeadOfDepartmentController@assignments');
     Route::get('perfil',  'HeadOfDepartmentController@profile');
