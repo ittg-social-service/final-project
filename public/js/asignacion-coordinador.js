@@ -1,5 +1,5 @@
 var app = angular.module('assignments', ['common', 'ngMessages']);
-app.controller('assignmentController', ['$http', 'API', '$scope', function ($http, API, $scope) {
+app.controller('assignmentController', ['$http', 'API', '$scope', '$q', function ($http, API, $scope, $q) {
    var vm = this;
    vm.filterBy = '';
    var isModalOpen = false;
@@ -12,33 +12,36 @@ app.controller('assignmentController', ['$http', 'API', '$scope', function ($htt
    API.getPeriods().then(function successCallback(response) {
       vm.periods = response.data;
       vm.periods.forEach(function  (period) {
-         period.nameToDisplay = period.months + ' ' + period.year;
+         period.nameToDisplay = period.period + ' ' + period.year;
       });
     
   });
    function getData(period) {
+      vm.studentsResp = undefined;
       API.getStudentsInPeriod(period).then(function  (data) {
-        vm.students = data.data;
-	      API.getGroupsInPeriod(period).then(function  (data) {
-	        vm.groups = data.data;
-	        	if (vm.groups.length == 0) {
-	            //var $toastContent = $('<span>No existe ningun grupo <a class="waves-effect waves-light " href="#" ng-click="vm.toggleModal()">Crear</a></span>');
-	            //Materialize.toast($toastContent, 4000, 'red');
-               API.makeToast('No existen grupos en este periodo');
-	        	}
-
-	        	vm.students.forEach(function(student) {
-	         	student['isChecked'] = false;
-	         	student['group'] = vm.groups.find(function (group) {return group.id == student.group_id;}) || {key: 'No asignado'};
-	        	});
-	        	vm.studentsResp = vm.students;
-	        	filterData();
-	      });
-
+         vm.students = data.data;
+         $q.all(vm.students.map(function(student) {
+              return  $http({ method: 'GET', url: '/student/' + student.id + '/group' }).then(function  (response) {
+                        var group = response.data.group;
+                        if (group.id != 1) {
+                           student['group'] = group;
+                        }else{
+                           student['group'] = {key: 'No asignado', id: group.id};
+                        }
+                     });
+         })).then(function() {
+              vm.studentsResp = angular.copy(vm.students);
+               filterData();   
+         });
       });
-
-      
+      API.getGroupsInPeriod(period).then(function  (data) {
+           vm.groups = data.data;
+            if (vm.groups.length == 0) {
+               API.makeToast('No existen grupos en este periodo');
+            }
+         });
    }
+
    vm.createGroup = function (isvalid) {
    	if (isvalid) {
    		vm.group.period = vm.period.id;
@@ -51,7 +54,7 @@ app.controller('assignmentController', ['$http', 'API', '$scope', function ($htt
 	          },
 	         data: vm.group
 	      }).then(function successCallback(response) {
-	         console.log(response.data);
+	         API.makeToast('Grupo creado exitosamente', 2);
 	         getData(vm.periodForData.id);
 	         toggleModal();
 	        
@@ -67,13 +70,31 @@ app.controller('assignmentController', ['$http', 'API', '$scope', function ($htt
    	var someStudentIsChecked = vm.students.some(function  (item) {
    		return item.isChecked;
    	});
+
    	if (!someStudentIsChecked) {
 
    		API.makeToast('No selecciono ningun alumno');
    	}else if(!vm.groupId){
    		API.makeToast('No selecciono ningun grupo');
    	}else{
-	      vm.students.forEach(function (item) {
+         var studentsToSend = vm.students.filter(function  (item) {
+            return item.isChecked && (item.group.id != vm.groupId);
+         });
+         $q.all(studentsToSend.map(function(student) {
+              return $http({
+                        method: 'PUT',
+                        url: '/student/' + student.id + '',
+                        headers: {
+                           'X-CSRF-TOKEN': API.token
+                         },
+                        data: {group: vm.groupId}
+                     })
+         })).then(function() {
+               API.makeToast('Asignacion exitosa', 2);
+
+               getData(vm.periodForData.id);  
+         });
+	   /*   vm.students.forEach(function (item) {
 	         if (item.isChecked && (item.group_id != vm.groupId)) {
 	             $http({
 	                  method: 'PUT',
@@ -83,7 +104,7 @@ app.controller('assignmentController', ['$http', 'API', '$scope', function ($htt
 	                   },
 	                  data: {group: vm.groupId}
 	               }).then(function successCallback(response) {
-	                  console.log(response.data);
+	                  //console.log(response.data);
 	                 getData(vm.periodForData.id);
 	                //  $('#modal-crear-grupo').modal('close');
 	                 
@@ -93,23 +114,26 @@ app.controller('assignmentController', ['$http', 'API', '$scope', function ($htt
 	                console.log('errot');
 	            });
 	         }
-	      });
+	      });*/
    	}
       //console.log(vm.grupo);
    }
    vm.toggleSelectItem = function (student) {
 
       student.isChecked = !student.isChecked;
-      console.log(student.isChecked);
+      //console.log(student.isChecked);
       //console.log(vm.students[index].isChecked);
    }
 
    vm.verifyIfChecked = function (student) {
       return student.isChecked;
    }
-   vm.verifyIfAsigned = function (student) {
-      return student.group_id != 1;
+   var verifyIfAsigned = function (student) {
+      if (vm.students) {
+         return student.group.id != 1;
+      }
    }
+   vm.verifyIfAsigned = verifyIfAsigned;
    vm.onPeriodChange = function () {
    	if (vm.period) {
    		var str = vm.period.nameToDisplay;
@@ -142,16 +166,16 @@ app.controller('assignmentController', ['$http', 'API', '$scope', function ($htt
    function filterData() {
       switch(vm.filterBy) {
          case '1':
-            vm.students = vm.studentsResp;
+            vm.students =  vm.studentsResp;
             vm.students = vm.students.filter(function(item) {
-               return item.group_id != 1;
+               return item.group.id != 1;
             });
             
             break;
          case '2':
             vm.students = vm.studentsResp;
             vm.students = vm.students.filter(function(item) {
-               return item.group_id == 1;
+               return item.group.id == 1;
             });
             break;
          case '3':

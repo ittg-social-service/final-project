@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
     public function department_manager()
     {
-      return $this->hasOne('App\DeparmentManager');
+      return $this->hasOne('App\DepartmentManager');
     }
     public function coordinator()
     {

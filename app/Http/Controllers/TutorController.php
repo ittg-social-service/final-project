@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tutor;
 use App\User;
-
+use Auth;
 
 class TutorController extends Controller
 {
@@ -42,25 +42,27 @@ class TutorController extends Controller
      */
     public function store(Request $request)
     {
-        $tutor = new Tutor;
-        $tutor->name = $request->name;
-        $tutor->lastn1 = $request->lastn1;
-        $tutor->lastn2 = str_random(10);
-        $tutor->phone = $request->phone;
-        $tutor->ncontrol = $request->ncontrol;
-        $tutor->email = $request->email;
-        $tutor->photo = '/img/avatars/default.png';
-        $tutor->head_of_department_id = 1; //deberia ser jefe de la sesion actual
-        $tutor->save();
+        $this->validate($request, [
+            'nc' => 'unique:users',
+        ]);
+
         $user = new User;
-        $user->name = $tutor->name;
-        $user->lastn1 = $tutor->lastn1;
-        $user->lastn2 = $tutor->lastn2;
-        $user->photo = $tutor->photo;
-        $user->email = $tutor->email;
-        $user->password = bcrypt($tutor->ncontrol);
-        $user->usertype_id = $tutor->id;
+        $user->nc = $request->nc;
+        $user->name = str_random(10);
+        $user->first_lastname = str_random(10);
+        $user->second_lastname = str_random(10);
+        $user->email = str_random(10).'@gmail.com';
+        $user->phone = str_random(10);
+        $user->avatar = '/img/avatars/default.png';
+        $user->password = bcrypt($request->nc);
         $user->role_id = 2;
+        $user->save();
+
+        $tutor = new Tutor;
+        $tutor->user_id = $user->id;
+        $tutor->department_manager_id = Auth::user()->department_manager->id;
+        $tutor->save();
+  
         return redirect('/jefe-departamento/tutores/crear');
     }
 
@@ -72,7 +74,9 @@ class TutorController extends Controller
      */
     public function show($id)
     {
-        //
+        $tutor = User::find($id)->tutor;
+
+        return response()->json(['tutor' => $tutor]);
     }
 
     /**
@@ -110,7 +114,18 @@ class TutorController extends Controller
     }
     public function all()
     {
+        $toReturn = [];
         $tutors = Tutor::whereNotIn('id', [1])->get();
+        foreach ($tutors as $tutor) {
+            array_push($toReturn, $tutor->user);
+        }
+        return response()->json($toReturn);
+    }
+    public function groupsForTutor( $id )
+    {
+
+        $tutors = Tutor::find($id)->groups;
+
         return response()->json($tutors->toArray());
     }
 }

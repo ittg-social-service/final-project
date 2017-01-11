@@ -26,7 +26,7 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
 	API.getPeriods().then(function  (response) {
 		vm.periods = response.data;
 		 vm.periods.forEach(function  (period) {
-            period.nameToDisplay = period.months + ' ' + period.year;
+            period.nameToDisplay = period.period + ' ' + period.year;
          });
 		
 	});

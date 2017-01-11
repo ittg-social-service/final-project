@@ -16,11 +16,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-<<<<<<< HEAD
-Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], function () {
-=======
+
 Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
->>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
+
     Route::get('home','Student\HomeController@index');
 
     Route::get('activity/{id}/homework/{id2}','Student\ActivitiesController@show');
@@ -33,11 +31,9 @@ Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
     ]);
 });
 
-<<<<<<< HEAD
-Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], function () {
-=======
+
 Route::group(['prefix' => 'teacher','middleware'=>['auth']], function () {
->>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
+
     Route::get('home','Teacher\HomeController@index');
     //Route::get('group/pdf/{id}','TestController@Makepdf');
     Route::get('group/{id}/pdf','Teacher\PdfsController@makepdf');
@@ -88,10 +84,13 @@ Route::group(['prefix' => 'coordinador','middleware' => ['auth', 'role:coordinat
 
 Route::get('/student/list',  'StudentController@all');
 Route::get('/student/list-for-period/{id}',  'StudentController@allInPeriod');
+Route::get('/student/{id}/group',  'StudentController@groupForStudent');
 Route::get('/group/list',  'GroupController@all');
 Route::get('/group/{id}/students',  'GroupController@students');
+Route::get('/group/{id}/tutor',  'GroupController@tutorForGroup');
 Route::get('/group/list-for-period/{id}',  'GroupController@allInPeriod');
 Route::get('/tutor/list',  'TutorController@all');
+Route::get('/tutor/{id}/groups',  'TutorController@groupsForTutor');
 Route::get('/period/list',  'PeriodController@all');
 
 Route::resource('headOfDpt', 'HeadOfDepartmentController');

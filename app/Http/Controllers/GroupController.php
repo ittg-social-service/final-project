@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Group;
 use DB;
+use Auth;
+use App\User;
+use App\Tutor;
 
 class GroupController extends Controller
 {
@@ -48,7 +51,7 @@ class GroupController extends Controller
         $group = new Group;
         $group->key = $request->key;
         $group->period_id = $request->period;
-        $group->coordinator_id = 1; // deberia ser el id del coordinador que lo registra es decir el que esta logueado
+        $group->coordinator_id = Auth::user()->coordinator->id; // deberia ser el id del coordinador que lo registra es decir el que esta logueado
         $group->tutor_id = 1; //id del tutor creado por defecto
         $group->save();
         return response()->json(['status' => 'ok']);
@@ -86,7 +89,7 @@ class GroupController extends Controller
     public function update(Request $request, $id)
     {
         $group = Group::find($id);
-        $group->tutor_id = $request->tutor;
+        $group->tutor_id = Tutor::find($request->tutor)->id;
         $group->save();
         return response()->json($request->tutor);
     }
@@ -118,8 +121,20 @@ class GroupController extends Controller
     }
     public function students( $groupId )
     {
+        $toReturn = [];
         $students = Group::find($groupId)->students;
-        return response()->json($students->toArray());
+        foreach ($students as $student) {
+            array_push($toReturn, $student->user);
+        }
+        return response()->json($toReturn);
+
+    }
+
+    public function tutorForGroup( $groupId )
+    {
+        $tutor = Group::find($groupId)->tutor->user;
+
+        return response()->json(['tutor' => $tutor]);
     }
 
 }

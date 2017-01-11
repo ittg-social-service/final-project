@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Student;
 use App\Tutor;
 use App\Group;
-use App\HeadOfDepartment;
+use App\DepartmentManager;
 use Auth;
 use Image;
 use App\User;
@@ -83,45 +83,37 @@ class HeadOfDepartmentController extends Controller
     {
         $toValidate = array(
                             'name' => 'bail|required',
-                            'lastn1' => 'bail|required',
-                            'lastn2' => 'bail|required',
+                            'first_lastname' => 'bail|required',
+                            'second_lastname' => 'bail|required',
                             'phone' => 'bail|required|digits:10' );
-        $hod = HeadOfDepartment::find($id);
-        if ($hod->email != $request->email) {
+        $user = Auth::user();
+        if ($user->email != $request->email) {
             $toValidate['email'] = 'bail|required|unique:users';
         }
         
         $this->validate($request, $toValidate);
-        $user = User::where([
-                                ['usertype_id', '=', $id],
-                                ['role_id', '=', 3]
-                            ])->first();
-        $photo = "";
+
+        $avatar = "";
       
-        if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            $fileName = Auth::user()->usertype_id . '_'. $id . '.' . $photo->getClientOriginalExtension();
-            Image::make($photo)->resize(300,300)->save( public_path('/uploads/avatars/hod/' . $fileName) );
-            //Cloudder::upload($photo, $fileName);
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $fileName = Auth::user()->department_manager->id . '_'. $id . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300,300)->save( public_path('/uploads/avatars/hod/' . $fileName) );
+            //Cloudder::upload($avatar, $fileName);
            // $uplo = Cloudder::getResult();
-            $photo = '/uploads/avatars/hod/' . $fileName;
+            $avatar = '/uploads/avatars/hod/' . $fileName;
         }else{
-            $photo = $hod->photo;
+            $avatar = $user->avatar;
         }
 
-        $hod->name = $request->name;
-        $hod->lastn1 = $request->lastn1;
-        $hod->lastn2 = $request->lastn2;
-        $hod->phone = $request->phone;
-        $hod->email = $request->email;
-        $hod->photo = $photo;
-        $hod->save();
-        $user->name = $hod->name;
-        $user->lastn1 = $hod->lastn1;
-        $user->lastn2 = $hod->lastn2;
-        $user->email = $hod->email;
-        $user->photo = $hod->photo;
+        $user->name = $request->name;
+        $user->first_lastname = $request->first_lastname;
+        $user->second_lastname = $request->second_lastname;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->avatar = $avatar;
         $user->save();
+
         return redirect('/jefe-departamento');
 
     }
@@ -183,7 +175,7 @@ class HeadOfDepartmentController extends Controller
     }
     public function profile()
     {
-       $target = HeadOfDepartment::find(Auth::user()->usertype_id);
+       $target = Auth::user();
        return view('HeadOfDepartment.profile',['target' => $target]);
 
     }

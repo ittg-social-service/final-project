@@ -44,17 +44,17 @@
 	                 </thead>
 
 	                 <tbody>
-	                   <tr ng-repeat="student in vm.students | filter:searchTarget" ng-class="{'red-text lighten-4': !vm.verifyIfAsigned(student), 'green-text lighten-4': vm.verifyIfAsigned(student)}">
+	                   <tr ng-repeat="student in vm.students | filter:searchTarget" ng-class="{'red-text lighten-4': !vm.verifyIfAsigned(student), 'green-text lighten-4': vm.verifyIfAsigned(student)}" ng-if="vm.studentsResp">
 	                     <td>
 	                        <p>
 	                           <input type="checkbox" id="@{{'test' + $index}}" ng-checked="vm.verifyIfChecked(student)" ng-click="vm.toggleSelectItem(student)"/>
 	                           <label for="@{{'test' + $index}}"></label>
 	                        </p>
 	                     </td>
-	                     <td><img ng-src="@{{student.photo}}" alt="" class="circle photo"></td>
+	                     <td><img ng-src="@{{student.avatar}}" alt="" class="circle photo"></td>
 	                     <td>@{{ student.name }}</td>
-	                     <td>@{{ student.lastn1 }}</td>
-	                     <td>@{{ student.ncontrol }}</td>
+	                     <td>@{{ student.first_lastname }}</td>
+	                     <td>@{{ student.nc }}</td>
 	                     <td>@{{ student.email }}</td>
 	                     <td>@{{ student.group.key }}</td>
 	                   </tr>
@@ -73,7 +73,19 @@
 	            </div>
 	         </div>
 	         
-
+			{{-- <div class="loading">	
+			  <div class="preloader-wrapper active" ng-show="!vm.studentsResp">
+			    <div class="spinner-layer spinner-red-only">
+			      <div class="circle-clipper left">
+			        <div class="circle"></div>
+			      </div><div class="gap-patch">
+			        <div class="circle"></div>
+			      </div><div class="circle-clipper right">
+			        <div class="circle"></div>
+			      </div>
+			    </div>
+			  </div>
+			</div> --}}
          
          	@include('shared.coordinator.create-group')
          </div>

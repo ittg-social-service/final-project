@@ -15,9 +15,9 @@
 					        	</h5>
 					        </li>
 					        <li class="collection-item avatar" ng-repeat="student in group.students">
-						      <img ng-src="@{{ student.photo }}" alt="" class="circle">
+						      <img ng-src="@{{ student.avatar }}" alt="" class="circle">
 						      <span class="title">@{{ student.name }}</span>
-						      <p>@{{ student.ncontrol }} <br>
+						      <p>@{{ student.nc }} <br>
 						         
 						      </p>
 						      <a href="#!" class="secondary-content"><i class="material-icons">visibility</i></a>

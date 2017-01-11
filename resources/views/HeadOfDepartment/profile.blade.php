@@ -6,11 +6,11 @@
           <div class="row">
            {!! Form::open(['route' => ['headOfDpt.update', $target], 'files' => true, 'method' => 'PUT'])!!}
             <div class="col s12 m4">
-              <img src="{{$target->photo}}" id="image" class="edit-driver-avatar responsive-img">
+              <img src="{{$target->avatar}}" id="image" class="edit-driver-avatar responsive-img">
               <div class="file-field input-field">
                 <div class="btn" class="blue">
                   <span>Foto</span>
-                  <input type="file" name="photo" id="file" >
+                  <input type="file" name="avatar" id="file" >
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
@@ -25,12 +25,12 @@
                     <label for="name" data-error="{{ $errors->first('name') }}">Nombre</label>  
                   </div>
                   <div class="input-field col m4 s12">
-                    <input type="text" value="{{ $target->lastn1 }}" placeholder="A. paterno" id="lastn1" name="lastn1" class="validate{{ $errors->has('lastn1') ? ' invalid' : '' }}">
-                    <label for="lastn1" data-error="{{ $errors->first('lastn1') }}">A. Paterno</label>  
+                    <input type="text" value="{{ $target->first_lastname }}" placeholder="A. paterno" id="first_lastname" name="first_lastname" class="validate{{ $errors->has('first_lastname') ? ' invalid' : '' }}">
+                    <label for="first_lastname" data-error="{{ $errors->first('first_lastname') }}">A. Paterno</label>  
                   </div>
                   <div class="input-field col m4 s12">
-                    <input type="text" value="{{ $target->lastn2 }}" placeholder="A. Materno" id="lastn2" name="lastn2" class="validate{{ $errors->has('lastn2') ? ' invalid' : '' }}">
-                    <label for="lastn2" data-error="{{ $errors->first('lastn2') }}">A. Materno</label>  
+                    <input type="text" value="{{ $target->second_lastname }}" placeholder="A. Materno" id="second_lastname" name="second_lastname" class="validate{{ $errors->has('second_lastname') ? ' invalid' : '' }}">
+                    <label for="second_lastname" data-error="{{ $errors->first('second_lastname') }}">A. Materno</label>  
                   </div>
                   <div class="input-field col m6 s12">
                     <input type="text" value="{{ $target->phone }}" placeholder="Telefono" id="phone" name="phone" class="validate{{ $errors->has('phone') ? ' invalid' : '' }}">

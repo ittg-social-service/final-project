@@ -47,14 +47,14 @@ class StudentController extends Controller
         ]);
 
         $user = new User;
-        $user->nc = $request->ncontrol;
+        $user->nc = $request->nc;
         $user->name = str_random(10);
         $user->first_lastname = str_random(10);
         $user->second_lastname = str_random(10);
         $user->email = str_random(10).'@gmail.com';
         $user->phone = str_random(10);
         $user->avatar = '/img/avatars/default.png';
-        $user->password = bcrypt($request->ncontrol);
+        $user->password = bcrypt($request->nc);
         $user->role_id = 1;
         $user->save();
 
@@ -77,7 +77,9 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = User::find($id)->student;
+
+        return response()->json(['info' => $student]);
     }
 
     /**
@@ -100,10 +102,10 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $student = Student::find($id);
+        $student = User::find($id)->student;
         $student->group_id = $request->group;
         $student->save();
-        return response()->json(['group' => $request->group]);
+        return response()->json(['group' => $student]);
     }
 
     /**
@@ -128,7 +130,19 @@ class StudentController extends Controller
     }
     public function allInPeriod( $periodId )
     {
-        $students = DB::table('students')->where('period_id', $periodId)->get();
-        return response()->json($students->toArray());
+        $toReturn = [];
+        $students = Student::where('period_id', $periodId)->get();
+        foreach ($students as $student) {
+            array_push($toReturn, $student->user);
+        }
+        return response()->json($toReturn);
     }
+     public function groupForStudent( $id )
+    {
+     
+        $group = User::find($id)->student->group;
+
+        return response()->json(['group' => $group]);
+    }
+
 }

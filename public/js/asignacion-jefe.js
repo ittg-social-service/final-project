@@ -6,7 +6,7 @@
    angular
       .module('app', ['common'])
       /*.directive('select', materialSelect)*/
-      .controller('asigController', ['API', '$http', '$scope', function(API, $http, $scope){
+      .controller('asigController', ['API', '$http', '$scope', '$q', function(API, $http, $scope, $q){
          vm = this;
 
          vm.tutor = '';
@@ -14,16 +14,20 @@
          API.getPeriods().then(function successCallback(response) {
 	          vm.periods = response.data;
 	          vm.periods.forEach(function  (period) {
-	          	period.nameToDisplay = period.months + ' ' + period.year;
+	          	period.nameToDisplay = period.period + ' ' + period.year;
 	          });
 
         });
           API.getTutors().then(function  (response) {
                vm.tutors = response.data;
-               vm.tutors.forEach(function (item) {
-                  item['groups'] = 0;
-               });
+               $q.all(vm.tutors.map(function(tutor) {
+                     tutor['groups'] = 0;
+                     return   $http({ method: 'GET', url: '/tutor/' + tutor.id + '' }).then(function  (response) {
+                                 tutor['info'] = response.data.tutor;
+                              });
+               })).then(function() {
 
+               });
             });
          
          vm.verifyIfAsigned = function (group) {
@@ -40,27 +44,33 @@
          var getDataForPeriod = function getDataForPeriod () {
          	API.getGroupsInPeriod(vm.periodForData.id).then(function  (response) {
                vm.groups = response.data;
-               vm.groups.forEach(function (group) {
-                  group['isChecked'] = false;
-                  API.getStudentsForGroup(group.id).then(function  (response) {
-                  	
-                  	group['students'] = response.data;
+               $q.all(vm.groups.map(function(group) {
+                     group['isChecked'] = false;
+                     return   API.getStudentsForGroup(group.id).then(function  (response) {
+                                 group['students'] = response.data;
+                                 $http({ method: 'GET', url: '/group/' + group.id + '/tutor' }).then(function  (response) {
+                                    var tutor = response.data.tutor;
+                                    if (group.tutor_id != 1) {
+                                       group['tutor'] = tutor;
+                                    }else{
+                                       group['tutor'] = {name: 'No asignado', id: tutor.id};
+                                    }
+                                 });
+                              });
+                              
+               })).then(function() {
+                     vm.gruposResp = vm.groups;
+                     groupsForTutor();
                   });
-                  group['tutor'] = vm.tutors.find(function (tutor) {return tutor.id == group.tutor_id;}) || {name: 'No asignado'};
-                  groupsForTutor();
-               });
-               vm.gruposResp = vm.groups;
             });
          } 
          vm.getDataForPeriod = getDataForPeriod;
 
          var groupsForTutor = function groupsForTutor() {
-            if (vm.tutor != null) {
-                var groupsForThisTutor = vm.groups.filter(function  (item) {
-                  return item.tutor_id == vm.tutor.id;
-               });
-               vm.tutor.groups = groupsForThisTutor.length;
-               
+            if (vm.tutor != null && vm.tutor != '') {
+               $http({ method: 'GET', url: '/tutor/' + vm.tutor.info.id + '/groups' }).then(function  (response) {
+                     vm.tutor.groups = response.data.length;
+                  });  
             }
          }
          vm.groupsForTutor = groupsForTutor;
@@ -74,14 +84,14 @@
             	API.makeToast('Debe seleccionar un tutor');
             }else{
                angular.forEach(vm.groups, function (item, key) {
-               if (item.isChecked && (item.tutor_id != vm.tutor.id)) {
+               if (item.isChecked && (item.tutor_id != vm.tutor.info.id)) {
                    $http({
                         method: 'PUT',
                         url: '/group/' + item.id + '',
                         headers: {
                            'X-CSRF-TOKEN': API.token
                          },
-                        data: {tutor: vm.tutor.id}
+                        data: {tutor: vm.tutor.info.id}
                      }).then(function successCallback(response) {
                      	API.makeToast('Grupo ' + item.key + ' asignado correctamente a:' + vm.tutor.name, 2 );
                        getDataForPeriod();
@@ -92,9 +102,6 @@
                }
             });
             }
-            
-            
-            //console.log(vm.grupo);
          }
       }]);
 

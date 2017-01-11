@@ -26,10 +26,10 @@
 
 		           <tbody>
 		             <tr ng-repeat="tutor in vm.tutors | filter:searchTarget">
-		                <td><img ng-src="@{{tutor.photo}}" alt="" class="circle photo"></td>
+		                <td><img ng-src="@{{tutor.avatar}}" alt="" class="circle photo"></td>
 		               <td>@{{ tutor.name }}</td>
-		               <td>@{{ tutor.lastn1 }}</td>
-		               <td>@{{ tutor.ncontrol }}</td>
+		               <td>@{{ tutor.first_lastname }}</td>
+		               <td>@{{ tutor.nc }}</td>
 		               <td>
 		                	<button class="waves-effect waves-teal btn-flat">
 		                 		<i class="material-icons green-text text-accent-4">visibility</i>
