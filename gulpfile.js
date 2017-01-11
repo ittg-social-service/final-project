@@ -1,6 +1,6 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue-2');
+//require('laravel-elixir-vue-2');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,6 +14,12 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+      mix.sass('app.scss')
+       //.webpack('app.js')
+       //.webpack('grupos.js', 'public/js/coordinador', 'resources/assets/js/coordinador')
+
+       .browserSync({
+                online: false,
+                proxy : '127.0.0.1:8000'
+        });
 });

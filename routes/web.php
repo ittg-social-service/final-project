@@ -16,7 +16,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+<<<<<<< HEAD
+Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], function () {
+=======
 Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
+>>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
     Route::get('home','Student\HomeController@index');
 
     Route::get('activity/{id}/homework/{id2}','Student\ActivitiesController@show');
@@ -29,7 +33,11 @@ Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
     ]);
 });
 
+<<<<<<< HEAD
+Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], function () {
+=======
 Route::group(['prefix' => 'teacher','middleware'=>['auth']], function () {
+>>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
     Route::get('home','Teacher\HomeController@index');
     //Route::get('group/pdf/{id}','TestController@Makepdf');
     Route::get('group/{id}/pdf','Teacher\PdfsController@makepdf');
@@ -51,5 +59,46 @@ Route::group(['prefix' => 'teacher','middleware'=>['auth']], function () {
     //Route::resourc('groups','Teacher\ActivitiesController');
 
 });
+
+
+
+Route::group(['prefix' => 'jefe-departamento','middleware' => ['auth', 'role:department_manager']], function () {
+    Route::get('/',  'HeadOfDepartmentController@index');
+    Route::group(['prefix' => 'alumnos'], function () {
+      Route::get('/',  'HeadOfDepartmentController@students');
+      Route::get('crear',  'HeadOfDepartmentController@createStudent');
+      Route::get('editar',  'HeadOfDepartmentController@updateStudent');
+    });
+    Route::group(['prefix' => 'tutores'], function () { 
+      Route::get('/',  'HeadOfDepartmentController@tutors');
+      Route::get('crear',  'HeadOfDepartmentController@createTutor');
+      
+    });
+    Route::get('asignaciones',  'HeadOfDepartmentController@assignments');
+    Route::get('perfil',  'HeadOfDepartmentController@profile');
+});
+
+Route::group(['prefix' => 'coordinador','middleware' => ['auth', 'role:coordinator']], function () {
+  Route::get('/',  'CoordinatorController@index');
+  Route::get('asignaciones',  'CoordinatorController@assignments');
+  Route::get('perfil',  'CoordinatorController@profile');
+  Route::get('grupos',  'CoordinatorController@groups');
+
+});
+
+Route::get('/student/list',  'StudentController@all');
+Route::get('/student/list-for-period/{id}',  'StudentController@allInPeriod');
+Route::get('/group/list',  'GroupController@all');
+Route::get('/group/{id}/students',  'GroupController@students');
+Route::get('/group/list-for-period/{id}',  'GroupController@allInPeriod');
+Route::get('/tutor/list',  'TutorController@all');
+Route::get('/period/list',  'PeriodController@all');
+
+Route::resource('headOfDpt', 'HeadOfDepartmentController');
+Route::resource('group', 'GroupController');
+Route::resource('coordinator', 'CoordinatorController');
+Route::resource('tutor', 'TutorController');
+Route::resource('student', 'StudentController');
+
 
 Route::get('/home', 'HomeController@index');
