@@ -48,4 +48,8 @@ class User extends Authenticatable
     {
       return $this->hasOne('App\Coordinator');
     }
+    public function career()
+    {
+      return $this->belongsTo('App\Career');
+    }
 }
