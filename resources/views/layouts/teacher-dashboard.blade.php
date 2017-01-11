@@ -13,7 +13,7 @@
    <ul id="out" class="side-nav fixed z-depth-0">
       <div class="client-info">
          <div class="">
-            <img src="{{url('img/tutor.jpg')}}" alt="" class="avatar">
+            <img src="{{url('/')}}/{{Auth::user()->avatar}}" alt="" class="avatar">
          </div>
          <div>
             <span class=" client-name lime-text accent-3" >{{ Auth::user()->name }}</span>

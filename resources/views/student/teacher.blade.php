@@ -4,7 +4,7 @@
     <h2 class="header">Mi tutor</h2>
     <div class="card horizontal">
       <div class="card-image">
-        <img src="{{url('img/tutor.jpg')}}">
+        <img src="{{url('/')}}/{{$info_teacher->user->avatar}}">
       </div>
       <div class="card-stacked">
         <div class="card-content">
@@ -14,9 +14,7 @@
                 <li>
                   Apellidos: {{$info_teacher->user->first_lastname}} {{$info_teacher->user->second_lastname}}
                 </li>
-                <li>
-                  Carrera: {{$info_teacher->career}}
-                </li>
+                
                 <li>Email: {{$info_teacher->user->email}}</li>
 
                 <li>Telefono: {{$info_teacher->user->phone}}</li>

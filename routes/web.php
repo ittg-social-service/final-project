@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
+Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], function () {
 
     Route::get('home','Student\HomeController@index');
 
@@ -32,7 +32,9 @@ Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
 });
 
 
-Route::group(['prefix' => 'teacher','middleware'=>['auth']], function () {
+
+Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], function () {
+
 
     Route::get('home','Teacher\HomeController@index');
     //Route::get('group/pdf/{id}','TestController@Makepdf');
@@ -65,10 +67,10 @@ Route::group(['prefix' => 'jefe-departamento','middleware' => ['auth', 'role:dep
       Route::get('crear',  'HeadOfDepartmentController@createStudent');
       Route::get('editar',  'HeadOfDepartmentController@updateStudent');
     });
-    Route::group(['prefix' => 'tutores'], function () { 
+    Route::group(['prefix' => 'tutores'], function () {
       Route::get('/',  'HeadOfDepartmentController@tutors');
       Route::get('crear',  'HeadOfDepartmentController@createTutor');
-      
+
     });
     Route::get('asignaciones',  'HeadOfDepartmentController@assignments');
     Route::get('perfil',  'HeadOfDepartmentController@profile');

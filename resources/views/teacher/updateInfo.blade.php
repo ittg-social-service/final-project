@@ -11,21 +11,24 @@
     </div>
 @endif
 
-  {!!Form::model($user,['route'=>['edit.teacher',Auth::user()],'method'=>'PATCH','file'=>true,'class'=>'col s12'])!!}
+  {!!Form::model($user,['route'=>['edit.teacher',Auth::user()],'method'=>'PATCH','files'=>true,'class'=>'col s12'])!!}
     {{csrf_field()}}
     <div class="row">
       <div class="input-field col s4">
         <i class="material-icons prefix">perm_identity</i>
-        {!!form::text('code',Auth::user()->id,['id'=>'control_number','class'=>'validate','disabled']) !!}
-        {!!form::label('control_number', 'Número de control',['class'=>'active'])!!}
+        {!!form::text('code',Auth::user()->nc,['id'=>'control_number','class'=>'validate','disabled']) !!}
+        {!!form::label('control_number', 'Número de tarjeta',['class'=>'active'])!!}
       </div>
       <div class="input-field col s6">
         <div class="file-field input-field">
           <div class="btn">
             <span>Imagen</span>
-            {!! Form::file('avatar',['accept'=>'image/jpg'])!!}
+            <input type="file" name="avatar" accept="image/*">
           </div>
-        </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+
       </div>
     </div>
     <div class="row">
@@ -55,18 +58,14 @@
         {!!form::label('email', 'E-mail',['class'=>'active'])!!}
       </div>
     </div>
-    <!--div class="row">
-      <div class="input-field col s12">
-        <select>
-          <option value="" disabled selected>Elige una opcion</option>
-          <option value="1">Ingeniería electrica</option>
-          <option value="2">Ingeniería Electronica</option>
-
-        </select>
-        <label>Elige tu carrera</label>
-      </div>
-    </div-->
     <div class="row">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="material-icons prefix">email</i>
+        {!!form::password('password',null,['id'=>'password','class'=>'validate']) !!}
+        {!!form::label('password', 'Contraseña:',['class'=>'active'])!!}
+      </div>
+    </div>
       <div class="input-field col s12">
         {!!form::submit('Actualizar',['id'=>'update','name'=>'update','class'=>'btn waves-effect waves-light']) !!}
       </div>
