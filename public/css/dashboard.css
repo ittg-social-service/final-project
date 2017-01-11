@@ -1,0 +1,206 @@
+.elegant-bg {
+  background: #fcfcfc !important; }
+
+.red-text {
+  color: #FF0945 !important; }
+
+.disabled {
+  cursor: not-allowed; }
+
+.success {
+  background: green; }
+
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  background: #fcfcfc; }
+
+.side-nav {
+  background: #232226;
+  color: #eef5db !important; }
+  .side-nav a {
+    color: #B2CCD6 !important; }
+  .side-nav li a i {
+    margin-right: 14px;
+    color: #B2CCD6 !important; }
+  .side-nav .side-nav-logo {
+    background: #383838;
+    height: 64px; }
+
+.client-info {
+  background: #383838;
+  height: 200px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .client-info div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center; }
+  .client-info .avatar {
+    width: 100px;
+    height: 100px;
+    border: 2px solid white;
+    border-radius: 100%; }
+  .client-info .client-name {
+    padding-top: 12px;
+    font-size: 22px;
+    text-transform: capitalize; }
+
+nav {
+  padding-left: 304px;
+  background: white;
+  color: #37494F;
+  /*background: #ef2d56;#FF0945*/ }
+  nav .search-icon {
+    color: #37494F !important; }
+
+.brand-logo > img {
+  margin-top: 1px;
+  position: relative;
+  height: 63px; }
+
+/*sidenavbar user dashboard*/
+#main-content {
+  margin-top: 20px;
+  padding-left: 300px; }
+
+.card-title {
+  /*padding:7px !important;*/
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  text-transform: capitalize;
+  padding-bottom: 3px !important;
+  padding-top: 3px !important;
+  /*font-size: 17px !important;*/ }
+
+.card-action {
+  padding: 12px !important;
+  text-align: center; }
+  .card-action .row {
+    margin: 0;
+    padding: 0; }
+    .card-action .row a {
+      color: #B2CCD6 !important; }
+      .card-action .row a:hover {
+        color: #00E5BE !important; }
+
+.card-action-item {
+  padding-top: 5px;
+  font-size: 12px; }
+
+.card-action-item a {
+  color: #B2CCD6; }
+  .card-action-item a:hover {
+    color: #00E5BE; }
+
+.card-image .active-car-indicator {
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 100%; }
+  .card-image .active-car-indicator a > i {
+    color: #00E5BE !important;
+    font-size: 20px;
+    margin: 5px 5px 5px 2px; }
+
+.file-field .upload-image-button {
+  height: 55px;
+  position: relative;
+  top: -55px;
+  right: -80%; }
+
+#map {
+  margin-top: 2px;
+  margin-right: 5px;
+  height: 89vh; }
+
+.navbar-fixed {
+  margin-top: -20px; }
+
+.map-nav {
+  background: white;
+  padding-left: 5px !important; }
+
+.map-client-opts {
+  height: 64px !important; }
+  .map-client-opts img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-top: 15px; }
+  .map-client-opts .client-name {
+    text-transform: capitalize; }
+
+.borde {
+  border: 1px solid black; }
+
+.dinamicMap {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: -100vw;
+  z-index: -100;
+  opacity: 0; }
+  .dinamicMap #dinamicMapContainer {
+    width: calc(100% - 300px);
+    height: 98%;
+    position: absolute;
+    top: 0px;
+    left: 300px; }
+  .dinamicMap .travel-info {
+    z-index: 3005;
+    position: relative;
+    color: #37494F; }
+    .dinamicMap .travel-info .title {
+      font-size: 15px;
+      font-weight: bolder; }
+    .dinamicMap .travel-info .avatar {
+      width: 50px;
+      height: 50px; }
+
+.hide {
+  opacity: 0;
+  z-index: -100;
+  left: -100vw; }
+
+.show {
+  opacity: 1;
+  z-index: 3000;
+  left: 0; }
+
+@media only screen and (max-width: 992px) {
+  #main-content {
+    padding-left: 0; }
+  nav {
+    padding-left: 10px; }
+  .upload-image-button {
+    right: 0%; } }
+
+.active-device i {
+  color: #00E5BE !important;
+  opacity: 1;
+  animation: blink 0.7s infinite; }
+
+@keyframes blink {
+  0% {
+    opacity: 1; }
+  50% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+/*# sourceMappingURL=client-dashboard.css.map */

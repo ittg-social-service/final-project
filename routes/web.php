@@ -16,7 +16,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+<<<<<<< HEAD
 Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], function () {
+=======
+Route::group(['prefix' => 'student','middleware'=>['auth']], function () {
+>>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
     Route::get('home','Student\HomeController@index');
 
     Route::get('activity/{id}/homework/{id2}','Student\ActivitiesController@show');
@@ -29,7 +33,11 @@ Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], fun
     ]);
 });
 
+<<<<<<< HEAD
 Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], function () {
+=======
+Route::group(['prefix' => 'teacher','middleware'=>['auth']], function () {
+>>>>>>> 58a207c25d5383009e6bceb490b3094d2f987fdc
     Route::get('home','Teacher\HomeController@index');
     //Route::get('group/pdf/{id}','TestController@Makepdf');
     Route::get('group/{id}/pdf','Teacher\PdfsController@makepdf');
