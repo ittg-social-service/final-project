@@ -12,6 +12,7 @@ class CareersTableSeeder extends Seeder
     public function run()
     {
         DB::table('careers')->insert([
+            ['name' => str_random(10)],
             ['name' => 'Sistemas Computacionales'],
             ['name' => 'Electrica'],
             ['name' => 'Electronica'],
