@@ -26,7 +26,7 @@
    </head>
    <body>
 	  <!-- Dropdown Structure -->
-		<ul id="dropdown1" class="dropdown-content">
+{{-- 		<ul id="dropdown1" class="dropdown-content">
 		  <li><a href="#!">Perfil</a></li>
 		  <li><a href="#!">Salir</a></li>
 		  <li class="divider"></li>
@@ -56,7 +56,7 @@
 		      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
 		    </ul>
 		  </div>
-		</nav>
+		</nav> --}}
       <ul id="slide-out" class="side-nav fixed">
          <li>
             <div class="userView">

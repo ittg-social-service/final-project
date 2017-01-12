@@ -15,7 +15,8 @@
 		                 <th data-field="id">Foto</th>
 		                 <th data-field="name">Nombre</th>
 		                 <th data-field="price">Apellido</th>
-		                 <th data-field="price">telefono</th>
+		                 <th data-field="price">tarjeta</th>
+		                 <th data-field="price">Correo</th>
 		                 <th data-field="price"></th>
 		                 {{-- <th data-field="price">Carrera</th>
 		                 <th data-field="price">Semestre</th>
@@ -30,6 +31,7 @@
 		               <td>@{{ tutor.name }}</td>
 		               <td>@{{ tutor.first_lastname }}</td>
 		               <td>@{{ tutor.nc }}</td>
+		               <td>@{{ tutor.email }}</td>
 		               <td>
 		                	<button class="waves-effect waves-teal btn-flat">
 		                 		<i class="material-icons green-text text-accent-4">visibility</i>

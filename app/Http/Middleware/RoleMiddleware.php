@@ -25,10 +25,10 @@ class RoleMiddleware
                     return redirect('/teacher/groups');   
                     break;
                 case 'department_manager':
-                    return redirect('/jefe-departamento');   
+                    return redirect('/jefe-departamento/alumnos');   
                     break;
                 case 'coordinator':
-                    return redirect('/coordinador');   
+                    return redirect('/coordinador/grupos');   
                     break;
                 
                 default:
