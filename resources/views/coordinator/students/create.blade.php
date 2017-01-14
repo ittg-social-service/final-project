@@ -1,4 +1,4 @@
-@extends('layouts.jefe')
-@section('jefe-content')
+@extends('layouts.coordinador')
+@section('coord-content')
 	@include('shared.coord-hod.students.create')
 @endsection

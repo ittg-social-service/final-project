@@ -16,6 +16,7 @@
                   <input class="file-path validate" type="text">
                 </div>
               </div>
+              <span class="red-text center-align">{{ $errors->first('avatar') }}</span>
             </div>
             <div class="col s12 m8">
              
@@ -55,5 +56,6 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
+    @include('shared.session-status')
 @endsection

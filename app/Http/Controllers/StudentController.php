@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Student;
 use App\User;
 use DB;
+use Auth;
 
 class StudentController extends Controller
 {
@@ -31,7 +32,11 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::user()->role->type == 'department_manager') {
+            return view('HeadOfDepartment.students.create');
+        }else{
+            return view('coordinator.students.create');
+        }
     }
 
     /**

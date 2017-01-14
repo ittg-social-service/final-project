@@ -70,7 +70,6 @@ Route::group(['prefix' => 'jefe-departamento','middleware' => ['auth', 'role:dep
     Route::group(['prefix' => 'tutores'], function () {
       Route::get('/',  'HeadOfDepartmentController@tutors');
       Route::get('crear',  'HeadOfDepartmentController@createTutor');
-
     });
     Route::get('asignaciones',  'HeadOfDepartmentController@assignments');
     Route::get('perfil',  'HeadOfDepartmentController@profile');
@@ -78,6 +77,15 @@ Route::group(['prefix' => 'jefe-departamento','middleware' => ['auth', 'role:dep
 
 Route::group(['prefix' => 'coordinador','middleware' => ['auth', 'role:coordinator']], function () {
   Route::get('/',  'CoordinatorController@index');
+  Route::group(['prefix' => 'alumnos'], function () {
+      Route::get('/',  'CoordinatorController@students');
+      Route::get('crear',  'CoordinatorController@createStudent');
+      Route::get('editar',  'CoordinatorController@updateStudent');
+  });
+  Route::group(['prefix' => 'tutores'], function () {
+    Route::get('/',  'CoordinatorController@tutors');
+    Route::get('crear',  'CoordinatorController@createTutor');
+  });
   Route::get('asignaciones',  'CoordinatorController@assignments');
   Route::get('perfil',  'CoordinatorController@profile');
   Route::get('grupos',  'CoordinatorController@groups');

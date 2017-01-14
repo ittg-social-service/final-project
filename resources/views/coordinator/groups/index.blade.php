@@ -4,6 +4,7 @@
 		<div ng-controller="coordGroupsController as vm">
 			@include('shared.coord-hod.period-for-data-dropdown')
 			@include('shared.errors.no-data-in-period')
+	        @include('shared.coordinator.create-group')
 	         <div ng-show="vm.periodForData">
 	         	<div class="row">
 	         		<div class="col m3 s12" ng-repeat="group in vm.groups">
@@ -25,7 +26,6 @@
 					    </ul>		
 	         		</div>
 	         	</div>
-	         	@include('shared.coordinator.create-group')
 	         </div>
 		</div>
 	</div>

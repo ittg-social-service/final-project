@@ -25,7 +25,8 @@ class CoordinatorController extends Controller
     
     public function index()
     {
-        return view('coordinator.index');
+        //return view('coordinator.index');
+        return redirect('/coordinador/alumnos');
     }
 
     /**
@@ -80,48 +81,42 @@ class CoordinatorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $toValidate = array(
+       $toValidate = array(
                             'name' => 'bail|required',
-                            'lastn1' => 'bail|required',
-                            'lastn2' => 'bail|required',
-                            'phone' => 'bail|required|digits:10' );
-        $coord = Coordinator::find($id);
-        if ($coord->email != $request->email) {
+                            'first_lastname' => 'bail|required',
+                            'second_lastname' => 'bail|required',
+                            'phone' => 'bail|digits:10',
+                            'avatar' => 'bail|image' );
+        $user = Auth::user();
+        if ($user->email != $request->email) {
             $toValidate['email'] = 'bail|required|unique:users';
         }
         
         $this->validate($request, $toValidate);
-        $user = User::where([
-                                ['usertype_id', '=', $id],
-                                ['role_id', '=', 4]
-                            ])->first();
-        $photo = "";
+
+        $avatar = "";
       
-        if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            $fileName = Auth::user()->usertype_id . '_'. $id . '.' . $photo->getClientOriginalExtension();
-            Image::make($photo)->resize(300,300)->save( public_path('/uploads/avatars/coord/' . $fileName) );
-            //Cloudder::upload($photo, $fileName);
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $fileName = Auth::user()->coordinator->id . '_'. $id . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(300,300)->save( public_path('/uploads/avatars/coord/' . $fileName) );
+            //Cloudder::upload($avatar, $fileName);
            // $uplo = Cloudder::getResult();
-            $photo = '/uploads/avatars/coord/' . $fileName;
+            $avatar = '/uploads/avatars/coord/' . $fileName;
         }else{
-            $photo = $coord->photo;
+            $avatar = $user->avatar;
         }
 
-        $coord->name = $request->name;
-        $coord->lastn1 = $request->lastn1;
-        $coord->lastn2 = $request->lastn2;
-        $coord->phone = $request->phone;
-        $coord->email = $request->email;
-        $coord->photo = $photo;
-        $coord->save();
-        $user->name = $coord->name;
-        $user->lastn1 = $coord->lastn1;
-        $user->lastn2 = $coord->lastn2;
-        $user->email = $coord->email;
-        $user->photo = $coord->photo;
+        $user->name = $request->name;
+        $user->first_lastname = $request->first_lastname;
+        $user->second_lastname = $request->second_lastname;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->avatar = $avatar;
         $user->save();
-        return redirect('/jefe-departamento');
+
+        return redirect('/coordinador/perfil')->with('status', 'Su información ha sido actualizada');
+
     }
 
     /**
@@ -133,6 +128,36 @@ class CoordinatorController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function students()
+    {
+        
+        return view('coordinator.students.index');
+    }
+     public function createStudent()
+    {
+        
+        return view('coordinator.students.create');
+    }
+     public function updateStudent()
+    {
+        
+        return view('coordinator.students.update');
+    }
+    public function tutors()
+    {
+       
+        return view('coordinator.tutors.index');
+    }
+     public function createTutor()
+    {
+        
+        return view('coordinator.tutors.create');
+    }
+     public function updateTutor()
+    {
+        
+        return view('coordinator.tutors.update');
     }
     public function assignments()
     {
@@ -146,7 +171,7 @@ class CoordinatorController extends Controller
     }
     public function profile()
     {
-       $target = Coordinator::find(Auth::user()->usertype_id);
+       $target = Auth::user();
        return view('coordinator.profile',['target' => $target]);
 
     }

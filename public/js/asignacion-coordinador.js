@@ -41,31 +41,61 @@ app.controller('assignmentController', ['$http', 'API', '$scope', '$q', function
             }
          });
    }
+   /*funciones de crear grupo*/
+  function toggleModal() {
+         if (!isModalOpen) {
+             $('#modal-crear-grupo').modal('open');
+         }else{
+            $('#modal-crear-grupo').modal('close');
+            vm.group = {
+               key: '',
+               keyToDisplay: '',
+               period: ''
+            }
+            $scope.createGroupForm.$setPristine();
+         }
+         isModalOpen = !isModalOpen;
+      }
+      vm.toggleModal = toggleModal;
 
-   vm.createGroup = function (isvalid) {
-   	if (isvalid) {
-   		vm.group.period = vm.period.id;
-   		vm.group.key = vm.group.keyToDisplay;
-   		$http({
-	         method: 'POST',
-	         url: '/group',
-	         headers: {
-	            'X-CSRF-TOKEN': API.token
-	          },
-	         data: vm.group
-	      }).then(function successCallback(response) {
-	         API.makeToast('Grupo creado exitosamente', 2);
-	         getData(vm.periodForData.id);
-	         toggleModal();
-	        
-	      }, function errorCallback(error) {
-	       
-	       	error.data.key.forEach(function  (error) {
-	       		API.makeToast(error, 1);
-	       	});
-	      });
-   	}
-   };
+      vm.onPeriodChange = function () {
+         if (vm.period) {
+            var str = vm.period.nameToDisplay;
+            var pre1 = [];
+            pre1.push(str.slice(0, 1));
+            pre1.push(str.slice(str.indexOf('-')+1, str.indexOf('-')+2));
+            pre1.push(str.slice(str.length-2));
+            vm.group.keyToDisplay = pre1.join("") + 'G' + (vm.group.key || '');
+         }
+      }
+
+      vm.createGroup = function (isvalid) {
+         if (isvalid) {
+            vm.group.period = vm.period.id;
+            vm.group.key = vm.group.keyToDisplay.toUpperCase();
+            $http({
+               method: 'POST',
+               url: '/group',
+               headers: {
+                  'X-CSRF-TOKEN': API.token
+                },
+               data: vm.group
+            }).then(function successCallback(response) {
+               if (vm.periodForData) {
+                  getData(vm.periodForData.id);
+               }
+               API.makeToast('Grupo creado exitosamente', 2);
+              toggleModal();
+                             
+            }, function errorCallback(error) {
+             
+               error.data.key.forEach(function  (error) {
+                  API.makeToast(error, 1);
+               });
+            });
+         }
+    };
+    /*fin funciones de crear grupo*/
    vm.asignToGroup = function () {
    	var someStudentIsChecked = vm.students.some(function  (item) {
    		return item.isChecked;
@@ -134,32 +164,7 @@ app.controller('assignmentController', ['$http', 'API', '$scope', '$q', function
       }
    }
    vm.verifyIfAsigned = verifyIfAsigned;
-   vm.onPeriodChange = function () {
-   	if (vm.period) {
-   		var str = vm.period.nameToDisplay;
-	   	var pre1 = [];
-	   	pre1.push(str.slice(0, 1));
-	   	pre1.push(str.slice(str.indexOf('-')+1, str.indexOf('-')+2));
-	   	pre1.push(str.slice(str.length-2));
-	   	vm.group.keyToDisplay = pre1.join("") + 'G' + (vm.group.key || '');
-   	}
-   	
-   }
-   function toggleModal() {
-   	if (!isModalOpen) {
-   		 $('#modal-crear-grupo').modal('open');
-   	}else{
-   		$('#modal-crear-grupo').modal('close');
-   		vm.group = {
-		   	key: '',
-		   	keyToDisplay: '',
-		   	period: ''
-		   }
-		   $scope.createGroupForm.$setPristine();
-   	}
-   	isModalOpen = !isModalOpen;
-   }
-   vm.toggleModal = toggleModal;
+   
    vm.getDataForPeriod = function  () {
    	getData(vm.periodForData.id);
    }

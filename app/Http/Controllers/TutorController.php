@@ -31,7 +31,11 @@ class TutorController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::user()->role->type == 'department_manager') {
+            return view('HeadOfDepartment.tutors.create');
+        }else{
+            return view('coordinator.tutors.create');
+        }
     }
 
     /**
@@ -43,14 +47,17 @@ class TutorController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nc' => 'unique:users',
+            'name' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+            'first_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+            'second_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+            'nc' => 'bail|required|unique:users',
         ]);
 
         $user = new User;
         $user->nc = $request->nc;
-        $user->name = str_random(10);
-        $user->first_lastname = str_random(10);
-        $user->second_lastname = str_random(10);
+        $user->name = $request->name;
+        $user->first_lastname = $request->first_lastname;
+        $user->second_lastname = $request->second_lastname;
         $user->email = str_random(10).'@gmail.com';
         $user->phone = str_random(10);
         $user->avatar = '/img/avatars/default.png';
@@ -62,8 +69,12 @@ class TutorController extends Controller
         $tutor->user_id = $user->id;
         $tutor->department_manager_id = Auth::user()->department_manager->id;
         $tutor->save();
-  
-        return redirect('/jefe-departamento/tutores/crear');
+
+        if (Auth::user()->role->type == 'department_manager') {
+            return redirect('/jefe-departamento/tutores/crear')->with('status', 'Tutor Guardado exitosamente');
+        }else{
+            return redirect('/coordinador/tutores/crear')->with('status', 'Tutor Guardado exitosamente');;
+        }
     }
 
     /**

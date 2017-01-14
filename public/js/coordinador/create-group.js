@@ -1,7 +1,7 @@
 
 
-var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
-.controller('coordGroupsController', ['API', '$http', '$scope', function(API, $http, $scope){
+var app = angular.module('createGroup', ['common', 'ngMessages'])
+.controller('createGroupController', ['API', '$http', '$scope', function(API, $http, $scope){
 	var vm = this;
 	var isModalOpen = false;
 	vm.group = {
@@ -33,8 +33,6 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
 	vm.getDataForPeriod = function  () {
 		getData(vm.periodForData.id);
 	}
-
-	/*funciones de crear grupo*/
 	function toggleModal() {
 	   	if (!isModalOpen) {
 	   		 $('#modal-crear-grupo').modal('open');
@@ -77,7 +75,6 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
 		   		if (vm.periodForData) {
 		   			getData(vm.periodForData.id);
 		   		}
-		   		API.makeToast('Grupo creado exitosamente', 2);
 		        toggleModal();
 		         		        
 		      }, function errorCallback(error) {
