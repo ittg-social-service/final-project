@@ -89,7 +89,7 @@ class CoordinatorController extends Controller
                             'avatar' => 'bail|image' );
         $user = Auth::user();
         if ($user->email != $request->email) {
-            $toValidate['email'] = 'bail|required|unique:users';
+            $toValidate['email'] = 'bail|required|email|unique:users';
         }
         
         $this->validate($request, $toValidate);

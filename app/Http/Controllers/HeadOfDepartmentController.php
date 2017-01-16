@@ -10,6 +10,7 @@ use App\DepartmentManager;
 use Auth;
 use Image;
 use App\User;
+use App\Period;
 
 class HeadOfDepartmentController extends Controller
 {
@@ -90,7 +91,7 @@ class HeadOfDepartmentController extends Controller
                             'avatar' => 'bail|image' );
         $user = Auth::user();
         if ($user->email != $request->email) {
-            $toValidate['email'] = 'bail|required|unique:users';
+            $toValidate['email'] = 'bail|required|email|unique:users';
         }
         
         $this->validate($request, $toValidate);
@@ -181,4 +182,33 @@ class HeadOfDepartmentController extends Controller
        return view('HeadOfDepartment.profile',['target' => $target]);
 
     }
+    public function createPeriod()
+    {
+      
+       return view('HeadOfDepartment.create-period');
+
+    }
+    public function storePeriod(Request $request)
+    {
+      
+        $period = Period::where([
+                ['period', '=' ,$request->period],
+                ['year', '=' ,$request->year]
+                ])->first();
+        if ($period != null) {
+
+            return  response()->json(['status' => '0']);
+        }else{
+            $new_period = new Period;
+            $new_period->period = $request->period;
+            $new_period->year = $request->year;
+            $new_period->save();
+            return  response()->json(['status' => '1']);
+
+        }
+        
+        //$period = new Period;
+
+    }
+
 }

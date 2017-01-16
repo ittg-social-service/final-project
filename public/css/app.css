@@ -18,6 +18,7 @@ body {
 @media only screen and (max-width: 992px) {
   .main {
     padding-left: 0;
+    top: 70px;
   }
 }
 
@@ -47,6 +48,28 @@ body {
 
 .general-form__reset {
   vertical-align: bottom;
+}
+
+.arrow {
+  vertical-align: bottom;
+}
+
+.user-info {
+  color: #757575 !important;
+}
+
+.user-info__field {
+  height: 50px;
+}
+
+.preloading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fafafa;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
 }
 
 /*# sourceMappingURL=app.css.map */

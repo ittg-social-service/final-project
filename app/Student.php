@@ -22,4 +22,9 @@ class Student extends Model
   {
     return $this->belongsTo('App\Career');
   }
+
+  public function period()
+  {
+    return $this->belongsTo('App\Period');
+  }
 }

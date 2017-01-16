@@ -1,7 +1,7 @@
 
 
 var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
-.controller('coordGroupsController', ['API', '$http', '$scope', function(API, $http, $scope){
+.controller('coordGroupsController', ['API', '$http', '$scope', '$q', function(API, $http, $scope, $q){
 	var vm = this;
 	var isModalOpen = false;
 	vm.group = {
@@ -9,16 +9,29 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
 	   	keyToDisplay: '',
 	   	period: ''
 	 }
-
+	 vm.infoFor = function infoFor (target) {
+		vm.targetToEdit = target;
+		console.log(target);
+	}
 	 var getData = function getData(period) {
 	 	API.getGroupsInPeriod(period).then(function(response){
-			 vm.groups = response.data;
-			 vm.groups.forEach(function(group){
-			 	API.getStudentsForGroup(group.id).then(function  (response) {
-			 		console.log(response.data);
-			 		group['students'] = response.data;
-			 	});
-			 });
+			vm.groups = response.data;
+			$q.all(vm.groups.map(function(group) {
+                 return   API.getStudentsForGroup(group.id).then(function  (response) {
+                             group['students'] = response.data;
+                             $http({ method: 'GET', url: '/group/' + group.id + '/tutor' }).then(function  (response) {
+                                var tutor = response.data.tutor;
+                                if (group.tutor_id != 1) {
+                                   group['tutor'] = tutor;
+                                }else{
+                                   group['tutor'] = {name: 'No asignado', id: tutor.id};
+                                }
+                             });
+                          });
+                          
+           })).then(function() {
+				vm.groupsReady = true;
+              });
 			
 		});
 	 };

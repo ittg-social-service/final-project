@@ -73,6 +73,8 @@ Route::group(['prefix' => 'jefe-departamento','middleware' => ['auth', 'role:dep
     });
     Route::get('asignaciones',  'HeadOfDepartmentController@assignments');
     Route::get('perfil',  'HeadOfDepartmentController@profile');
+    Route::get('nuevo-periodo',  'HeadOfDepartmentController@createPeriod');
+    Route::post('guardar-periodo',  'HeadOfDepartmentController@storePeriod');
 });
 
 Route::group(['prefix' => 'coordinador','middleware' => ['auth', 'role:coordinator']], function () {

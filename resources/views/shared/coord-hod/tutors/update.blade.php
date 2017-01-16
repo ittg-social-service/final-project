@@ -2,7 +2,7 @@
           <div class="col s12 m12">
         <div class="card-panel white">
           <div class="row">
-           {!! Form::open(['route' => ['student.update', $target], 'files' => true, 'method' => 'PUT'])!!}
+           {!! Form::open(['route' => ['tutor.update', $target], 'files' => true, 'method' => 'PUT'])!!}
             <div class="col s12 m4">
               <img src="{{$target->avatar}}" id="image" class="edit-driver-avatar responsive-img">
               <div class="file-field input-field">
@@ -41,26 +41,9 @@
                   </div>
                    <div class="input-field col m6 s12">
                     <input type="text" value="{{ $target->nc }}" id="nc" name="nc" class="validate{{ $errors->has('nc') ? ' invalid' : '' }}">
-                    <label for="nc" data-error="{{ $errors->first('nc') }}">N.Control</label>  
+                    <label for="nc" data-error="{{ $errors->first('nc') }}">RFC</label>  
                   </div>
-             {{--       <p>
-				      <input type="checkbox" id="test5" name="setPassword" />
-				      <label for="test5">Red</label>
-				    </p>
-                  <div class="input-field col m6 s12">
-                    <input type="text" value="{{ $target->nc }}" id="nc" name="nc" class="validate{{ $errors->has('nc') ? ' invalid' : '' }}">
-                    <label for="nc" data-error="{{ $errors->first('nc') }}">N.Control</label>  
-                  </div> --}}
-
-                    <div class="input-field col s12 m6 ">
-					    <select name="period">
-					      <option value="" disabled >Choose your option</option>
-					      @foreach ($periods as $period)
-					      	<option value="{{ $period->id }}" {{ $user_period->id == $period->id ? 'selected="selected"' : '' }}>{{ $period->period }}</option>
-					      @endforeach
-					    </select>
-					    <label>Periodo</label>
-				  	</div>
+      
                   <div class="input-field col m6 s12 offset-m3">
                     <button class="btn waves-effect waves-light" type="submit" name="action">Actualizar
                     <i class="material-icons right">send</i>

@@ -10,7 +10,10 @@
          vm = this;
 
          vm.tutor = '';
-         
+         vm.dataLoading = false;
+         /*
+            Obtiene los periodos 
+         */
          API.getPeriods().then(function successCallback(response) {
 	          vm.periods = response.data;
 	          vm.periods.forEach(function  (period) {
@@ -18,6 +21,9 @@
 	          });
 
         });
+         /*
+            Obtiene la lista de tutores
+         */
           API.getTutors().then(function  (response) {
                vm.tutors = response.data;
                $q.all(vm.tutors.map(function(tutor) {
@@ -41,7 +47,13 @@
          vm.verifyIfChecked = function (group) {
             return group.isChecked;
          }
+         /*
+            * Obtiene los grupos de un periodo asi como el tutor de
+               cada uno de esos grupos si grupo.id_tutor == 1
+               quiere decir que el tutor no ha sido asignado
+         */
          var getDataForPeriod = function getDataForPeriod () {
+            vm.dataLoading = true;
          	API.getGroupsInPeriod(vm.periodForData.id).then(function  (response) {
                vm.groups = response.data;
                $q.all(vm.groups.map(function(group) {
@@ -59,7 +71,8 @@
                               });
                               
                })).then(function() {
-                     vm.gruposResp = vm.groups;
+                  vm.dataLoading = false;
+                     vm.groupsResp = vm.groups;
                      groupsForTutor();
                   });
             });

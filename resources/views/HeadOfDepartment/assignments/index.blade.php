@@ -2,10 +2,13 @@
 @section('jefe-content')
    	<div ng-app="app">
       <div ng-controller="asigController as vm">
+      		{{-- <div class="preloading"></div> --}}
       		<div class="container">
 		        @include('shared.coord-hod.period-for-data-dropdown')
 		         @include('shared.errors.no-data-in-period')
-		         <div ng-show="vm.periodForData && vm.groups.length > 0">
+		         @include('shared.preloader')
+		        
+		         <div ng-show="vm.groupsResp && vm.groups.length > 0">
 		         	
 			         <div class="row">
 			            <div class="col m12 s12">

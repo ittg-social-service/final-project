@@ -7,6 +7,8 @@ use App\Student;
 use App\User;
 use DB;
 use Auth;
+use App\Period;
+use Image;
 
 class StudentController extends Controller
 {
@@ -95,7 +97,17 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        /*nc.name,first_last,second_last,email,phone,avatar,password,periodo,carrera
+            tablas: user,student,period,career
+        */
+        $user = User::find($id);
+        $periods = Period::all();
+        $period = $user->student->period;
+        if (Auth::user()->role->type == 'department_manager') {
+            return view('HeadOfDepartment.students.update', ['target' => $user, 'user_period' => $period, 'periods' => $periods]);
+        }else{
+            return view('coordinator.students.update', ['target' => $user, 'user_period' => $period, 'periods' => $periods]);
+        }
     }
 
     /**
@@ -107,10 +119,57 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $student = User::find($id)->student;
-        $student->group_id = $request->group;
-        $student->save();
-        return response()->json(['group' => $student]);
+        $user = User::find($id);
+        $student = $user->student;
+        /*when is assgned to a group*/
+        if ($request->has('group')) {
+            $student->group_id = $request->group;
+            $student->save();
+            return response()->json(['group' => $student]);
+        }
+
+        $toValidate = [
+            'name' => 'required',
+            'first_lastname' => 'required',
+            'second_lastname' => 'required',
+            'phone' => 'bail|digits:10',
+            'avatar' => 'bail|image'
+        ];
+        if ($user->email != $request->email) {
+            $toValidate['email'] = 'bail|required|email|unique:users';
+        }
+         if ($user->nc != $request->nc) {
+            $toValidate['nc'] = 'bail|required|unique:users';
+        }
+        
+        $this->validate($request, $toValidate);
+
+          $avatar = "";
+
+          if ($request->hasFile('avatar')) {
+              $avatar = $request->file('avatar');
+              $fileName = Auth::user()->nc . '_'. $id . '.' . $avatar->getClientOriginalExtension();
+              Image::make($avatar)->resize(300, 300)->save( public_path('/avatars/' . $fileName) );
+              $avatar = '/avatars/' . $fileName;
+          }else{
+              $avatar = $user->avatar;
+          }
+
+          $id_user = Auth::user()->id;
+
+          $user->name = ucfirst($request->name);
+          $user->first_lastname = ucfirst($request->first_lastname);
+          $user->second_lastname = ucfirst($request->second_lastname);
+          $user->email = $request->email;
+          $user->nc = $request->nc;
+          $user->avatar = $avatar;
+          $user->phone = $request->phone;
+          $user->save();
+          if (Auth::user()->role->type == 'department_manager') {
+            return redirect('/jefe-departamento/alumnos')->with('status', 'Informacion del alumno actualizada');
+        }else{
+            return redirect('/coordinador/alumnos')->with('status', 'Informacion del alumno actualizada');;
+        }
     }
 
     /**
@@ -144,10 +203,11 @@ class StudentController extends Controller
     }
      public function groupForStudent( $id )
     {
-     
-        $group = User::find($id)->student->group;
+        $student = User::find($id)->student; //informacion extra del estudiante carrera,semestre
+        $group = $student->group; // informacion del grupo del estudiante
+        $tutor = $group->tutor->user; //informacion del tutor del alumno
 
-        return response()->json(['group' => $group]);
+        return response()->json(['group' => $group, 'tutor' => $tutor, 'student' => $student]);
     }
 
 }
