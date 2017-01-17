@@ -10,6 +10,7 @@ use App\DepartmentManager;
 use Auth;
 use Image;
 use App\User;
+use App\Period;
 
 class HeadOfDepartmentController extends Controller
 {
@@ -26,7 +27,8 @@ class HeadOfDepartmentController extends Controller
     
     public function index()
     {
-        return View('HeadOfDepartment.index');
+        //return View('HeadOfDepartment.index');
+        return redirect('/jefe-departamento/alumnos');
     }
 
     /**
@@ -85,10 +87,11 @@ class HeadOfDepartmentController extends Controller
                             'name' => 'bail|required',
                             'first_lastname' => 'bail|required',
                             'second_lastname' => 'bail|required',
-                            'phone' => 'bail|required|digits:10' );
+                            'phone' => 'bail|digits:10',
+                            'avatar' => 'bail|image' );
         $user = Auth::user();
         if ($user->email != $request->email) {
-            $toValidate['email'] = 'bail|required|unique:users';
+            $toValidate['email'] = 'bail|required|email|unique:users';
         }
         
         $this->validate($request, $toValidate);
@@ -114,7 +117,7 @@ class HeadOfDepartmentController extends Controller
         $user->avatar = $avatar;
         $user->save();
 
-        return redirect('/jefe-departamento');
+        return redirect('/jefe-departamento/perfil')->with('status', 'Su información ha sido actualizada');
 
     }
 
@@ -138,8 +141,8 @@ class HeadOfDepartmentController extends Controller
      */
     public function students()
     {
-        $students = Student::all();
-        return view('HeadOfDepartment.students.index', ['students' => $students]);
+        
+        return view('HeadOfDepartment.students.index');
     }
      public function createStudent()
     {
@@ -179,4 +182,33 @@ class HeadOfDepartmentController extends Controller
        return view('HeadOfDepartment.profile',['target' => $target]);
 
     }
+    public function createPeriod()
+    {
+      
+       return view('HeadOfDepartment.create-period');
+
+    }
+    public function storePeriod(Request $request)
+    {
+      
+        $period = Period::where([
+                ['period', '=' ,$request->period],
+                ['year', '=' ,$request->year]
+                ])->first();
+        if ($period != null) {
+
+            return  response()->json(['status' => '0']);
+        }else{
+            $new_period = new Period;
+            $new_period->period = $request->period;
+            $new_period->year = $request->year;
+            $new_period->save();
+            return  response()->json(['status' => '1']);
+
+        }
+        
+        //$period = new Period;
+
+    }
+
 }

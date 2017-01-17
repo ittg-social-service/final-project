@@ -3,6 +3,7 @@
   debe tener metodos
   * toggleModal()
  --}}
+ 
 <div id="modal-crear-grupo" class="modal">
   <div class="modal-content">
      <h4>Crear Grupo</h4>
@@ -14,7 +15,7 @@
                <input
                 id="clave"
                 name="key"
-                type="number"
+                type="text"
                 min="0" 
                 class="validate" 
                 required 
@@ -36,7 +37,7 @@
            	<div class="row">
            		<div class="col m12 s12">
 	           		<div class="center-align cyan-text">
-	               	@{{ 'Se guardara como: ' + vm.group.keyToDisplay }}
+	               	@{{ 'Se guardara como: ' + vm.group.keyToDisplay | uppercase }}
 	              	</div>
            		</div>
            	</div>

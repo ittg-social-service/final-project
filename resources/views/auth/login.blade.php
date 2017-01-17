@@ -24,7 +24,7 @@
             <div class="row">
                <div class="col m5 offset-m4">
                   <div class="card-panel">
-                     <h5 class="login-form__header center">Acceso al sistema</h5>
+                     <h5 class="general-form__header center">Acceso al sistema</h5>
                      <div class="row">
                         <form class="col m12 s12" role="form" method="POST" action="{{ url('/login') }}">
                            {{ csrf_field() }}

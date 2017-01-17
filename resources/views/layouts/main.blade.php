@@ -25,39 +25,16 @@
       <script type="text/javascript" src="/js/image.preview.js"></script>
    </head>
    <body>
-	  <!-- Dropdown Structure -->
-{{-- 		<ul id="dropdown1" class="dropdown-content">
-		  <li><a href="#!">Perfil</a></li>
-		  <li><a href="#!">Salir</a></li>
-		  <li class="divider"></li>
-		  <li><a href="#!">three</a></li>
-		</ul>
-		<nav>
-		  <div class="nav-wrapper">
-		    <a href="#!" class="brand-logo">Logo</a>
-		    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-		    <ul class="right hide-on-med-and-down">
-		      <li>
-					<nav>
-				    	<div class="nav-wrapper  ">
-				      	<form>
-				      	
-				        		<div class="input-field">
-				          		<input id="search" type="search" required ng-model="searchTarget" placeholder="Buscar">
-				          		<label for="search"><i class="material-icons ">search</i></label>
-				          		<i class="material-icons">close</i>
-				        		</div>
-				      	</form>
-				    	</div>
-				  	</nav>
-		      </li>
-		      <li><a href="badges.html">Components</a></li>
-		      <!-- Dropdown Trigger -->
-		      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
-		    </ul>
-		  </div>
-		</nav> --}}
-      <ul id="slide-out" class="side-nav fixed">
+		<div class="navbar-fixed hide-on-large-only">
+			
+			<nav>
+			  <div class="nav-wrapper light-blue">
+			    <a href="#!" class="brand-logo">Tutorias</a>
+			    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+			  </div>
+			</nav>
+		</div>
+      <ul id="slide-out" class="side-nav fixed ">
          <li>
             <div class="userView">
                <div class="background">
@@ -67,7 +44,7 @@
                 <img class="circle" src="{{ Auth::user()->avatar }}">
               </a>
               <a href="#">
-                <span class="black-text name">{{ Auth::user()->name }}</span>
+                <span class="black-text name">{{ strtoupper ( Auth::user()->name ) }}</span>
               </a>
               <a href="#">
                 <span class="black-text email">{{ Auth::user()->email }}</span>
