@@ -11,18 +11,18 @@
 							</div>
 							<div class="input-field col s12 m12">
 								<input  
-									id="nc" 
+									id="username" 
 									type="number" 
 									class="validate" 
-									ng-class="{'invalid': createStudentForm.nc.$invalid && createStudentForm.nc.$dirty,'valid': createStudentForm.nc.$valid}"
-									name="nc" 
+									ng-class="{'invalid': createStudentForm.username.$invalid && createStudentForm.username.$dirty,'valid': createStudentForm.username.$valid}"
+									name="username" 
 									required="required" 
-									ng-model="vm.student.nc">
-								<label for="nc" data-error="Error" data-success="Ok">N.Control</label>
+									ng-model="vm.student.username">
+								<label for="username" data-error="Error" data-success="Ok">N.Control</label>
 								
 								<div 
-									ng-messages="createStudentForm.nc.$error"
-									ng-if="createStudentForm.nc.$dirty">
+									ng-messages="createStudentForm.username.$error"
+									ng-if="createStudentForm.username.$dirty">
 								  <div ng-message="required" class="red-text">Este campo es obligatorio</div>
 								</div>
 							</div>

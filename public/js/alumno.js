@@ -73,9 +73,9 @@
 					vm.student = {};
 					$scope.createStudentForm.$setPristine();
 				}, function  (error) {
-					error.data.nc.forEach(function  (err) {
+					error.data.username.forEach(function  (err) {
 
-						API.makeToast(err.replace('nc', 'numero de control'), 1);
+						API.makeToast(err.replace('username', 'numero de control'), 1);
 					});
 				});
 				}

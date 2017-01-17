@@ -42,10 +42,10 @@
 		                 	</a>
 		                 </th>
 		                 <th data-field="price">
-		                 	<a href="" ng-click="vm.changeTableOrderType('nc')">
+		                 	<a href="" ng-click="vm.changeTableOrderType('username')">
 		                 		N.Control
-			                 	<i ng-show="vm.sortTableConf.sortType == 'nc' && !vm.sortTableConf.sortReverse" class="material-icons arrow">keyboard_arrow_down</i>
-	            				<i ng-show="vm.sortTableConf.sortType == 'nc' && vm.sortTableConf.sortReverse" class="material-icons arrow">keyboard_arrow_up</i>
+			                 	<i ng-show="vm.sortTableConf.sortType == 'username' && !vm.sortTableConf.sortReverse" class="material-icons arrow">keyboard_arrow_down</i>
+	            				<i ng-show="vm.sortTableConf.sortType == 'username' && vm.sortTableConf.sortReverse" class="material-icons arrow">keyboard_arrow_up</i>
 		                 	</a>
 		                 </th>
 		                 <th data-field="price">
@@ -64,7 +64,7 @@
 		                <td><img ng-src="@{{student.avatar}}" alt="" class="circle photo"></td>
 		               <td>@{{ student.name }}</td>
 		               <td>@{{ student.first_lastname }}</td>
-		               <td>@{{ student.nc }}</td>
+		               <td>@{{ student.username }}</td>
 		               <td>@{{ student.email}}</td>
 		               <td>
 	                	<a class="waves-effect waves-teal btn-flat" href="#user-info-modal" ng-click="vm.infoFor(student)">

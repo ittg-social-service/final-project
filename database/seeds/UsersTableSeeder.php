@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
     {
          DB::table('users')->insert([
          	[// fake department manager
-	            'nc' => str_random(10),
+	            'username' => str_random(10),
 	            'name' => str_random(10),
 	            'first_lastname' => str_random(10),
 	            'second_lastname' => str_random(10),
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
 	            'role_id' => 3
 	         ],
 	         [// fake coordinator
-	            'nc' => str_random(10),
+	            'username' => str_random(10),
 	            'name' => str_random(10),
 	            'first_lastname' => str_random(10),
 	            'second_lastname' => str_random(10),
@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
 	            'role_id' => 4
 	         ],
 	         [// fake tutor
-	            'nc' => str_random(10),
+	            'username' => str_random(10),
 	            'name' => str_random(10),
 	            'first_lastname' => str_random(10),
 	            'second_lastname' => str_random(10),
@@ -46,7 +46,7 @@ class UsersTableSeeder extends Seeder
 	            'role_id' => 2
 	         ],
          	[//real department manager
-	            'nc' => '13270550',
+	            'username' => '13270550',
 	            'name' => str_random(10),
 	            'first_lastname' => str_random(10),
 	            'second_lastname' => str_random(10),
@@ -57,7 +57,7 @@ class UsersTableSeeder extends Seeder
 	            'role_id' => 3
 	         ],
 	         [//real coordinator
-	         	'nc' => '132705501',
+	         	'username' => '132705501',
 	            'name' => str_random(10),
 	            'first_lastname' => str_random(10),
 	            'second_lastname' => str_random(10),

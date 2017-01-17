@@ -54,7 +54,7 @@
 	                     <td><img ng-src="@{{student.avatar}}" alt="" class="circle photo"></td>
 	                     <td>@{{ student.name }}</td>
 	                     <td>@{{ student.first_lastname }}</td>
-	                     <td>@{{ student.nc }}</td>
+	                     <td>@{{ student.username }}</td>
 	                     <td>@{{ student.email }}</td>
 	                     <td>@{{ student.group.key }}</td>
 	                   </tr>
