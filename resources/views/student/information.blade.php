@@ -14,21 +14,23 @@
   {!!Form::model($user,['route'=>['edit.student',Auth::user()],'method'=>'PATCH','files'=>true,'class'=>'col s12'])!!}
     {{csrf_field()}}
     <div class="row">
-      <div class="input-field col s4">
-        <i class="material-icons prefix">perm_identity</i>
-        {!!form::text('code',Auth::user()->nc,['id'=>'control_number','class'=>'validate','disabled']) !!}
-        {!!form::label('control_number', 'Número de control',['class'=>'active'])!!}
-      </div>
-      <div class="input-field col s6">
+
+      <div class="col s5">
+        <img src="{{url('/')}}/{{$user->avatar}}" id="image" class="edit-driver-avatar responsive-img">
         <div class="file-field input-field">
-          <div class="btn">
-            <span>Imagen</span>
-            <input type="file" name="avatar" accept="image/*">
+          <div class="btn" class="blue">
+            <span>Foto</span>
+            <input type="file" name="avatar" id="file" accept="img/*">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text">
           </div>
         </div>
+      </div>
+      <div class="input-field col s4">
+        <i class="material-icons prefix">perm_identity</i>
+        {!!form::text('code',Auth::user()->nc,['id'=>'control_number','class'=>'validate','disabled']) !!}
+        {!!form::label('control_number', 'Número de control',['class'=>'active'])!!}
       </div>
     </div>
     <div class="row">

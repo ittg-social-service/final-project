@@ -74,7 +74,9 @@ class HomeController extends Controller
       $user->email = $request->email;
       $user->avatar = $avatar;
       $user->phone = $request->phone;
-      $user->password = bcrypt($request->password);
+      if ($request->password) {
+        $user->password = bcrypt($request->password);
+      }
       $user->save();
       if($request->career_id!=null){
         $id_st = Auth::user()->student->id;

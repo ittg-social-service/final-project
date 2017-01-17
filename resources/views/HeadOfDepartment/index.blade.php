@@ -1,4 +1,10 @@
 @extends('layouts.jefe')
 @section('jefe-content')
-    hola wei no mames
+    <div class="row">
+      <div class="col s12">
+        <p class="blue-text">
+          Datos actualizados.
+        </p>
+      </div>
+    </div>
 @endsection

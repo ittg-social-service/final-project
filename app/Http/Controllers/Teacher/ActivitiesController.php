@@ -61,15 +61,7 @@ class ActivitiesController extends Controller
      */
     public function show($id)
     {
-        $activity = Activity::find($id);
-        /*
-        $activity_enabled = ActivityTeacher::->where([
-            ['activity_id',$id],
-            ['teacher_id',Auth::user->teacher->id],
-            ['group_id',],
-          ])->first();
-          */
-        return view('teacher.activity.show',['activity'=>$activity]);
+        //
     }
 
     /**
@@ -92,7 +84,15 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        $this->validate($request,[
+          'finish_date'=>'required',
+        ]);
+
+        $activity = ActivityTutor::findOrFail($id);
+        $activity->finish_date = $request->finish_date;
+        $activity->save();
+
+        return redirect('teacher/groups');
     }
 
     /**

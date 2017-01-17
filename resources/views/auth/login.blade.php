@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-        
+
         <link rel="stylesheet" href="/css/app.css">
           <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
@@ -30,8 +30,8 @@
                            {{ csrf_field() }}
                            <div class="row">
 								      <div class="input-field col s12 m12">
-								          <input id="email" name="email" type="email" class="validate {{ $errors->has('email') ? ' invalid' : '' }}" required autofocus>
-								          <label for="email" data-error="{{ $errors->first('email') }}">Correo</label>
+								          <input id="username" name="username" type="text" class="validate {{ $errors->has('username') ? ' invalid' : '' }}" required autofocus>
+								          <label for="username" data-error="{{ $errors->first('username') }}">Número de control o RFC</label>
 								      </div>
 								      <div class="input-field col s12 m12">
 								          <input id="password" type="password" name="password" class="validate {{ $errors->has('password') ? ' invalid' : '' }}" required>
@@ -43,13 +43,13 @@
 								      <label for="remember">Recordarme</label>
 								   </p>
 									<div class="row">
-										
+
 	                           <button type="submit" class="btn col m6 s6 offset-m3 offset-s3">
 	                                Acceder
 	                           </button>
 									</div>
                            <div class="row">
-                           	
+
 	                           <div class="col m12 s12 ">
 		                            <a class="login-form__reset center-align" href="{{ url('/password/reset') }}">
 		                                ¿Olvidaste tu contraseña?
@@ -64,8 +64,3 @@
         </div>
     </body>
 </html>
-
-       
-        
-
-

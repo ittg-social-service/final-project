@@ -14,8 +14,8 @@ class GroupsController extends Controller
 {
   public function index()
   {
-    $teacher = Auth::user()->tutor->id;
-    $groups = Tutor::find($teacher)->groups;
+    $groups = Auth::user()->tutor->groups;
+    //$groups = Tutor::find($teacher)->groups;
     //dd($groups);
     return view('teacher.groups',['groups'=>$groups,'enabled'=>false]);
   }
@@ -34,7 +34,14 @@ class GroupsController extends Controller
     ])->first();
     $activity = Activity::findOrFail($id_activity);
     $group = Group::findOrFail($id_group);
-    return view('teacher.activity.show',['activity'=>$activity,'group'=>$group,'is_update'=>$is_update]);
+
+    if ($is_update==null) {
+      return view('teacher.activity.show',['activity'=>$activity,'group'=>$group]);
+    }
+    else {
+      return view('teacher.activity.edit',['activity'=>$activity,'group'=>$group,'is_update'=>$is_update]);
+    }
+
   }
   public function showStudents($id)
   {

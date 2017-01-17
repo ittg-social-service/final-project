@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
-  public function periodo()
+  protected $table = 'groups';
+  protected $fillable = [
+    'key','tutor_id','period_id','coordinator_id',
+  ];
+  public function period()
   {
-    return $this->belongsTo('App\Period');
+    return $this->belongsTo('App\Period','period_id');
   }
   public function tutor()
   {
