@@ -24,7 +24,7 @@
       @foreach ($students as $student)
         <tr>
           <th>
-            {{$student->user->nc}}
+            {{$student->user->username}}
           </th>
           <th>
             {{$student->user->first_lastname}}

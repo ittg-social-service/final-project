@@ -11,6 +11,9 @@
           Entregó
         </th>
         <th>
+          Estado
+        </th>
+        <th>
           Acción
         </th>
 
@@ -27,7 +30,14 @@
             {{$homework->created_at->diffForHumans()}}
           </th>
           <th>
-            <a href="{{url('/')}}/{{$homework->file}}" class="blue-text text-darken-2">Revisar tarea</a>
+            @if ($homework->status)
+              <span class="green-text">Aceptada.</span>
+            @else
+              <span class="red-text">Aún no aceptada.</span>
+            @endif
+          </th>
+          <th>
+            <a href="{{route('homeworks.show',$homework->id)}}" class="btn-floating cyan tooltipped green" data-position="top" data-delay="50" data-tooltip="Revisar"><i class="material-icons">visibility</i></a>
           </th>
         </tr>
       @endforeach

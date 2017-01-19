@@ -24,6 +24,12 @@ Route::group(['prefix' => 'student','middleware'=>['auth', 'role:student']], fun
     Route::get('activity/{id}/homework/{id2}','Student\ActivitiesController@show');
     Route::resource('activities','Student\ActivitiesController');
     Route::get('myteacher','Student\HomeController@myteacher');
+    Route::resource('observations','Student\ObservationsController',['names'=>
+      [
+        'create' => 'student.observations.create',
+        'update' => 'student.observations.update',
+      ]
+    ]);
     Route::get('information/{id}/edit','Student\HomeController@information');
     Route::patch('information/{id}',[
       'as'=>'edit.student',
@@ -37,7 +43,7 @@ Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], funct
 
 
     Route::get('home','Teacher\HomeController@index');
-    //Route::get('group/pdf/{id}','TestController@Makepdf');
+    Route::get('group/{id}/statistics','Teacher\PdfsController@statisticsPdf');
     Route::get('group/{id}/pdf','Teacher\PdfsController@makepdf');
     Route::get('student/{id}/homeworks','Teacher\ActivitiesController@homeworks');//--------pendiente
 
@@ -46,9 +52,10 @@ Route::group(['prefix' => 'teacher','middleware'=>['auth', 'role:tutor']], funct
     Route::get('group/{id}/activities/{semester}','Teacher\GroupsController@show');
     Route::get('group/{id}/students','Teacher\GroupsController@showStudents');
     Route::get('groups','Teacher\GroupsController@index');
-
+    Route::resource('statistics','Teacher\StatisticsController');
     Route::resource('activities','Teacher\ActivitiesController');
-
+    Route::resource('homeworks','Teacher\HomeworksController');
+    Route::resource('observations','Teacher\ObservationsController');
     Route::get('information/{id}/edit','Teacher\HomeController@informationTeacher');
     Route::patch('information/{id}',[
       'as'=>'edit.teacher',

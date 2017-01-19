@@ -10,20 +10,21 @@ use App\Tutor;
 use Illuminate\Support\Facades\DB;
 use App\ActivityTutor;
 use Auth;
+use App\Semester;
 class GroupsController extends Controller
 {
   public function index()
   {
-    $groups = Auth::user()->tutor->groups;
-    //$groups = Tutor::find($teacher)->groups;
-    //dd($groups);
+    $groups = Auth::user()->tutor->groups()->paginate(10);
     return view('teacher.groups',['groups'=>$groups,'enabled'=>false]);
   }
   public function show($id,$semester)
   {
+    $semesters = Activity::distinct()->select('semester_id')->get();
+    //pendiente
     $activities = Activity::all()->where('semester_id', $semester);
     $group_id = $id;
-    return view('teacher.home',['activities'=>$activities,'group_id'=>$group_id]);
+    return view('teacher.home',compact('semesters','activities','group_id'));
   }
   public function show_activity($id_group,$id_activity)
   {

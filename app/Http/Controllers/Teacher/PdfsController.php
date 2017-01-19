@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Group;
 use Illuminate\Support\Facades\DB;
-
+use Auth;
+use App\Tutor;
 class PdfsController extends Controller
 {
   public function Makepdf($id)
@@ -16,7 +17,18 @@ class PdfsController extends Controller
                                       ->join('periods','groups.id','=','periods.id')
                                       ->select('groups.key','periods.period','periods.year')
                                       ->first();
-    $pdf = \PDF::loadView('group-pdf',['info_group'=>$info_group,'students'=>$students]);
+    $pdf = \PDF::loadView('teacher.pdfs.group-pdf',['info_group'=>$info_group,'students'=>$students]);
     return  $pdf->stream('lista.pdf');
+  }
+  public function statisticsPdf($id)
+  {
+    $group = Group::find($id);
+    $t_students = Group::find($id)->students->count();
+    $tutor_id = Auth::user()->tutor->id;
+    $activities = Tutor::find($tutor_id)->activities()->where('group_id', $id)->get();
+    //return view('teacher.statistics.show',compact('activities','t_students','group_id'));
+
+    $pdf = \PDF::loadView('teacher.pdfs.report',['group'=>$group,'t_students'=>$t_students,'activities'=>$activities]);
+    return  $pdf->stream('report.pdf');
   }
 }

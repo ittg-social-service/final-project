@@ -22,11 +22,11 @@ class HomeController extends Controller
 {
     public function index(){
       $group_id = Auth::user()->student->group->id;
-      $activities = DB::table('activity_teacher')
-            ->join('activities', 'activity_teacher.activity_id', '=', 'activities.id')
-            ->select('activities.*','activity_teacher.id as id_activity_teacher')
-            ->where('activity_teacher.group_id','=',$group_id)
-            ->orderBy('activity_teacher.created_at', 'desc')
+      $activities = DB::table('activity_tutor')
+            ->join('activities', 'activity_tutor.activity_id', '=', 'activities.id')
+            ->select('activities.*','activity_tutor.id as id_activity_tutor')
+            ->where('activity_tutor.group_id','=',$group_id)
+            ->orderBy('activity_tutor.created_at', 'desc')
             ->paginate(6);
 
       return view('student.home',['activities'=>$activities]);
@@ -51,7 +51,7 @@ class HomeController extends Controller
 
       if ($request->hasFile('avatar')) {
           $avatar = $request->file('avatar');
-          $fileName = Auth::user()->nc . '_'. $id . '.' . $avatar->getClientOriginalExtension();
+          $fileName = Auth::user()->username. '_'. $id . '.' . $avatar->getClientOriginalExtension();
           Image::make($avatar)->resize(250, 150)->save( public_path('avatars/' . $fileName) );
           $avatar = 'avatars/' . $fileName;
       }else{

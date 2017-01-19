@@ -21,7 +21,7 @@ class CreateActivitiesTable extends Migration
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->timestamps();
         });
-        Schema::create('activity_teacher', function (Blueprint $table) {
+        Schema::create('activity_tutor', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('activity_id')->unsigned();
             $table->foreign('activity_id')->references('id')->on('activities');

@@ -23,7 +23,7 @@
             </p>
           </div>
           <div class="card-action">
-            <a href="activity/{{$activity->id}}/homework/{{$activity->id_activity_teacher}}" class="yelow-text ">Enviar tarea</a>
+            <a href="activity/{{$activity->id}}/homework/{{$activity->id_activity_tutor}}" class="yelow-text ">Ver datalles de tarea</a>
           </div>
         </div>
       </div>
