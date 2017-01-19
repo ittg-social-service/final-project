@@ -29,7 +29,7 @@
       </div>
       <div class="input-field col s4">
         <i class="material-icons prefix">perm_identity</i>
-        {!!form::text('code',Auth::user()->nc,['id'=>'control_number','class'=>'validate','disabled']) !!}
+        {!!form::text('code',Auth::user()->username ,['id'=>'control_number','class'=>'validate','disabled']) !!}
         {!!form::label('control_number', 'Número de control',['class'=>'active'])!!}
       </div>
     </div>

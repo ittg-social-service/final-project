@@ -11,9 +11,12 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['type'=>'estudiante']);
-        Role::create(['type'=>'tutor']);
-        Role::create(['type'=>'jefe de departamento']);
-        Role::create(['type'=>'coordinador']);
+      DB::table('roles')->insert([
+       ['type' => 'student'],
+       ['type' => 'tutor'],
+       ['type' => 'department_manager'],
+       ['type' => 'coordinator']
+     ]);
+
     }
 }

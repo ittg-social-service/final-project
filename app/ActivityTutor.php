@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 class ActivityTutor extends Model
 {
-  protected $table = 'activity_teacher';
+  protected $table = 'activity_tutor';
   protected $fillable = [
     'activity_id','tutor_id','group_id','enabled','finish_date',
   ];
@@ -32,5 +32,9 @@ class ActivityTutor extends Model
   public function students()
   {
     return $this->belongsToMany('App\Student')->withPivot('group_id', 'file');;
+  }
+  public function getTotalAttribute()
+  {
+    return Homework::where([['activity_id',$this->activity_id],['status',1],['group_id',$this->group_id]])->count();
   }
 }

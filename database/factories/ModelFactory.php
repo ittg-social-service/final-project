@@ -15,13 +15,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
-        'nc' => $faker->numberBetween($min = 0, $max = 13270500),
+        'username' => $faker->numberBetween($min = 0, $max = 13270500),
         'name' => $faker->name,
         'first_lastname' => $faker->lastName,
         'second_lastname' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'phone' => 1231231231,
-        'avatar' => 'img/avatar/default.png',
+        'avatar' => 'avatars/default.png',
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];

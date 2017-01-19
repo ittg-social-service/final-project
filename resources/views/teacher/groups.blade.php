@@ -20,23 +20,20 @@
     <table class="striped">
         <thead>
           <tr>
-              <th>
-                ID
-              </th>
-              <th data-field="title">Clave</th>
-              <th data-field="description">Nombre</th>
+
+              <th data-field="title">Grupo</th>
+              <th data-field="description">Periodo</th>
               <th data-field="options">Opciones</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($groups as $group)
             <tr>
-              <td>{{$group->id}}</td>
               <td>{{$group->key}}</td>
-              <td>{{$group->period}}</td>
+              <td>{{$group->period->period}}/{{$group->period->year}}</td>
               <td>
                 <!-- Dropdown Trigger -->
-                <a class='dropdown-button btn  blue darken-4' href='' data-activates='dropdown{{$group->id}}'>Ver opciones</a>
+                <a class='dropdown-button btn  blue darken-4' href='' data-activates='dropdown{{$group->id}}'>Opciones</a>
                 <!-- Dropdown Structure -->
                 <ul id='dropdown{{$group->id}}' class='dropdown-content  blue darken-4'>
                   <li><a href="group/{{$group->id}}/pdf" class="black-text text-darken-2">
@@ -47,14 +44,20 @@
                   <li><a href="{{url('teacher/group')}}/{{$group->id}}/students" class="black-text text-darken-2">Revisar tareas</a></li>
 
                 </ul>
+                <a href="{{route('statistics.show',$group->id)}}" class="btn-floating cyan tooltipped green" data-position="top" data-delay="50" data-tooltip="Ver estadísicas"><i class="material-icons">insert_chart</i></a>
 
               </td>
+
             </tr>
 
           @endforeach
         </tbody>
       </table>
-
+      <div class="row">
+        <div class="col s9 offset-s3">
+          {{ $groups->links() }}
+        </div>
+      </div>
       <script type="text/javascript">
       $('.dropdown-button').dropdown({
             inDuration: 300,

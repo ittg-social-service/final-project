@@ -14,10 +14,9 @@
                 <li>
                   Apellidos: {{$info_teacher->user->first_lastname}} {{$info_teacher->user->second_lastname}}
                 </li>
-                
+
                 <li>Email: {{$info_teacher->user->email}}</li>
 
-                <li>Telefono: {{$info_teacher->user->phone}}</li>
               </ul>
 
           </p>

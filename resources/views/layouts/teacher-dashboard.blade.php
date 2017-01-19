@@ -30,14 +30,7 @@
                </span>
             </a>
          </li>
-         <!--li>
-            <a href="" class="lime-text accent-3">
-               <i class="material-icons custom">messages</i>
-               <span>
-                  Mensajes
-               </span>
-            </a>
-         </li-->
+         
          <li>
            <a class="lime-text accent-3" href="{{url('teacher/information/')}}/{{Auth::user()->id}}/edit">
              <i class="material-icons">settings</i>

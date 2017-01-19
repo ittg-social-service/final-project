@@ -32,7 +32,7 @@
   <body>
     <header>
     </header>
-    <h1>Lista de alumnos grupo: {{$info_group->key}} / {{$info_group->period}}-{{$info_group->year}}</h1>
+    <h1>Lista de alumnos grupo: {{$info_group->key}} / {{$info_group->period}}/{{$info_group->year}}</h1>
     <div class="container">
       <table>
           <tr>

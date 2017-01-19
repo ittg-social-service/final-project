@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Teacher;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Activity;
-use Auth;
 use App\Homework;
-use App\ActivityTutor;
-class ActivitiesController extends Controller
+use App\Observation;
+class HomeworksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +25,7 @@ class ActivitiesController extends Controller
      */
     public function create()
     {
-        dd('pasó');
+        //
     }
 
     /**
@@ -39,25 +37,6 @@ class ActivitiesController extends Controller
     public function store(Request $request)
     {
 
-        $activity_id = $request->activity_id;
-
-        $file = $request->file('file');
-        $name = $file->getClientOriginalName();
-
-        $real_name = Auth::user()->username.'actividad-'.$activity_id.'.pdf';
-        $path = 'homeworks/'.$real_name;
-        $request->file('file')->move('homeworks',$real_name);
-
-        Homework::create([
-          'student_id' => Auth::user()->student->id,
-           'activity_id' => $request->activity_id,
-           'tutor_id' => Auth::user()->student->group->tutor_id,
-           'group_id' => Auth::user()->student->group->id,
-           'file' => $path,
-        ]);
-
-
-        return redirect('student/home');
     }
 
     /**
@@ -66,22 +45,14 @@ class ActivitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,$id2)
+    public function show($id)
     {
-      $activity = Activity::findOrFail($id);
-      $homework = ActivityTutor::findOrFail($id2);
-      $enabled = Homework::where([
-        ['student_id','=',Auth::user()->student->id],
-        ['activity_id','=',$id],
-      ])->first();
+        $homework = Homework::findOrFail($id);
+        $observations = $homework->observations;
+        $intents = Observation::where([['homework_id',$id],['file','!=','null']])->count()+1;
 
-      if($enabled==null){
-          $extra = null;
-      }
-      else{
-          $extra = $enabled->observations;
-      }
-      return view('student.activities.show',compact('activity','homework','enabled','extra'));
+        return view('teacher.homeworks.show',compact('homework','observations','intents'));
+
     }
 
     /**
@@ -104,7 +75,10 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $homework = homework::findOrFail($id);
+        $homework->status = 1;
+        $homework->save();
+        return back();
     }
 
     /**

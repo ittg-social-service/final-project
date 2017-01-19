@@ -15,4 +15,8 @@ class Homework extends Model
   protected $dates = [
     'created_at',
   ];
+  public function observations()
+  {
+    return $this->hasMany('App\Observation');
+  }
 }
