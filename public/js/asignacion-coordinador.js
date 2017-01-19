@@ -20,20 +20,21 @@ app.controller('assignmentController', ['$http', 'API', '$scope', '$q', function
       vm.studentsResp = undefined;
       API.getStudentsInPeriod(period).then(function  (data) {
          vm.students = data.data;
+         console.log(vm.students);
          $q.all(vm.students.map(function(student) {
-              return  $http({ method: 'GET', url: '/student/' + student.id + '/group' }).then(function  (response) {
-                        var group = response.data.group;
-                        if (group.id != 1) {
-                           student['group'] = group;
-                        }else{
-                           student['group'] = {key: 'No asignado', id: group.id};
-                        }
-                     });
-         })).then(function() {
-              vm.studentsResp = angular.copy(vm.students);
-               filterData();   
+                 return  $http({ method: 'GET', url: '/student/' + student.id + '/group' }).then(function  (response) {
+                           var group = response.data.group;
+                           if (group.id != 1) {
+                              student['group'] = group;
+                           }else{
+                              student['group'] = {key: 'No asignado', id: group.id};
+                           }
+                        });
+            })).then(function() {
+                 vm.studentsResp = angular.copy(vm.students);
+                  filterData();   
+            });
          });
-      });
       API.getGroupsInPeriod(period).then(function  (data) {
            vm.groups = data.data;
             if (vm.groups.length == 0) {

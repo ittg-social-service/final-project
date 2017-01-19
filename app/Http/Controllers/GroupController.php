@@ -45,16 +45,24 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'key' => 'bail|unique:groups'
-        ]);
-        $group = new Group;
-        $group->key = $request->key;
-        $group->period_id = $request->period;
-        $group->coordinator_id = Auth::user()->coordinator->id; // deberia ser el id del coordinador que lo registra es decir el que esta logueado
-        $group->tutor_id = 1; //id del tutor creado por defecto
-        $group->save();
-        return response()->json(['status' => 'ok']);
+        $group = Group::where([
+                ['period_id', '=' ,$request->period],
+                ['key', '=' ,$request->key]
+                ])->first();
+        if ($group != null) {
+
+            return  response()->json(['status' => '0']);
+        }else{
+            $group = new Group;
+            $group->key = $request->key;
+            $group->period_id = $request->period;
+            $group->coordinator_id = Auth::user()->coordinator->id; // deberia ser el id del coordinador que lo registra es decir el que esta logueado
+            $group->tutor_id = 1; //id del tutor creado por defecto
+            $group->save();
+            return response()->json(['status' => 'ok']);
+
+        }
+        
     }
 
     /**
@@ -102,7 +110,10 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Group = Group::find($id);
+
+        $Group->delete();
+        return response()->json(['status' => 'ok']);
     }
     public function all()
     {
@@ -124,9 +135,9 @@ class GroupController extends Controller
         $toReturn = [];
         $students = Group::find($groupId)->students;
         foreach ($students as $student) {
-            array_push($toReturn, $student->user);
+             $student->user;
         }
-        return response()->json($toReturn);
+        return response()->json($students);
 
     }
 

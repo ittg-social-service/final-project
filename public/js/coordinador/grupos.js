@@ -4,15 +4,55 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
 .controller('coordGroupsController', ['API', '$http', '$scope', '$q', function(API, $http, $scope, $q){
 	var vm = this;
 	var isModalOpen = false;
+	var isEditModalOpen = false;
+	var isDeleteModalOpen = false;
 	vm.group = {
 	   	key: '',
 	   	keyToDisplay: '',
 	   	period: ''
 	 }
+	 vm.groupOptions = {
+	 	edit: false,
+	 	delete: false,
+	 	data: {}
+	 }
 	 vm.infoFor = function infoFor (target) {
 		vm.targetToEdit = target;
 		console.log(target);
 	}
+	vm.showGroupInfo = function showGroupInfo (group) {
+		vm.groupDisplaying = group;
+	}
+	vm.toggleEditGroupModal = function toggleEditGroupModal (group) {
+		if (!isEditModalOpen) {
+	   		 $('#edit-group-modal').modal('open');
+	   	}else{
+	   		$('#edit-group-modal').modal('close');
+			   //$scope.createGroupForm.$setPristine();
+	   	}
+	   	vm.selectedGroup = group;
+	   	isEditModalOpen = !isEditModalOpen;
+	}
+	vm.toggleDeleteGroupModal = function toggleDeleteGroupModal (group) {
+		if (!isDeleteModalOpen) {
+	   		 $('#delete-group-modal').modal('open');
+	   	}else{
+	   		$('#delete-group-modal').modal('close');
+			   //$scope.createGroupForm.$setPristine();
+	   	}
+	   	vm.selectedGroup = group;
+	   	isDeleteModalOpen = !isDeleteModalOpen;
+	}
+	vm.deleteGroup = function deleteGroup (group) {
+		$http({ method: 'DELETE', url: '/group/' + group.id  }).then(function  (response) {
+			API.makeToast('Grupo ' + group.key + ' eliminado correctamente', 2);
+			vm.toggleDeleteGroupModal(group);
+			getData(vm.periodForData.id);
+		 });
+	} 
+	vm.editGroup = function editGroup (group) {
+		vm.groupDisplaying = group;
+	} 
 	 var getData = function getData(period) {
 	 	API.getGroupsInPeriod(period).then(function(response){
 			vm.groups = response.data;
@@ -78,6 +118,7 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
    	vm.createGroup = function (isvalid) {
 	   	if (isvalid) {
 	   		vm.group.period = vm.period.id;
+	   		var origKey = vm.group.key;
 	   		vm.group.key = vm.group.keyToDisplay.toUpperCase();
 	   		$http({
 		         method: 'POST',
@@ -87,17 +128,19 @@ var app = angular.module('coordinatorGroups', ['common', 'ngMessages'])
 		          },
 		         data: vm.group
 		      }).then(function successCallback(response) {
-		   		if (vm.periodForData) {
-		   			getData(vm.periodForData.id);
-		   		}
-		   		API.makeToast('Grupo creado exitosamente', 2);
-		        toggleModal();
+		      	var resp = response.data.status;
+		    	if (resp == '0') {
+		    		vm.group.key = origKey;
+		    		API.makeToast('Ya existe un grupo con esa clave en este periodo',1);
+		    	}else{
+		    		if (vm.periodForData) {
+			   			getData(vm.periodForData.id);
+			   		}
+		    		API.makeToast('Grupo creado exitosamente',2);
+		    		toggleModal();
+		    	}
+
 		         		        
-		      }, function errorCallback(error) {
-		       
-		       	error.data.key.forEach(function  (error) {
-		       		API.makeToast(error, 1);
-		       	});
 		      });
 	   	}
 	 };

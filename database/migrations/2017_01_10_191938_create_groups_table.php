@@ -23,6 +23,7 @@ class CreateGroupsTable extends Migration
             $table->foreign('period_id')->references('id')->on('periods');
             $table->integer('coordinator_id')->unsigned();
             $table->foreign('coordinator_id')->references('id')->on('coordinators');
+            /*$table->softDeletes();*/
             $table->timestamps();
         });
     }

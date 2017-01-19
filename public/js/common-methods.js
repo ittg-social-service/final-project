@@ -5,8 +5,9 @@ angular.module('common',[])
       return $http({ method: 'GET', url: '/group/list' });
     }
 
-    this.getStudents = function  () {
-      return $http({ method: 'GET', url: '/student/list' });
+    this.getStudents = function  (page, period) {
+      
+      return $http({ method: 'GET', url: '/student/list/' + period + '', params: {page: page,amount:30} });
     }
     this.getGroupsInPeriod = function(period) {
       return $http({ method: 'GET', url: '/group/list-for-period/' + period + '' });

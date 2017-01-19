@@ -183,14 +183,21 @@ class StudentController extends Controller
         //
     }
 
-    public function all()
+    public function all($period)
     {
+        //enviar 0 para que lleve todos los elementos o enviar el id del periodo
+        //obtener period_id del request
         $toReturn = [];
-        $students = Student::all();
-        foreach ($students as $student) {
-            array_push($toReturn, $student->user);
+        if ($period == 0) {
+            $students = Student::paginate(50);
+        }else{
+
+            $students = Student::where('period_id', '=', $period)->paginate(50);
         }
-        return response()->json($toReturn);
+        foreach ($students as $student) {
+           $student->user;
+        }
+        return response()->json($students);
     }
     public function allInPeriod( $periodId )
     {
@@ -204,10 +211,16 @@ class StudentController extends Controller
      public function groupForStudent( $id )
     {
         $student = User::find($id)->student; //informacion extra del estudiante carrera,semestre
+    /*    dd($student);*/
+        if ($student->group_id == null) {
+            $student->group_id = 1;
+            $student->save();
+        }
         $group = $student->group; // informacion del grupo del estudiante
+        //dd($student);
         $tutor = $group->tutor->user; //informacion del tutor del alumno
 
-        return response()->json(['group' => $group, 'tutor' => $tutor, 'student' => $student]);
+        return response()->json(['group' => $group, 'tutor' => $tutor]);
     }
 
 }

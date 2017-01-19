@@ -1,8 +1,29 @@
 
 (function () {
 	var app = angular.module('student', ['common', 'ngMessages']);
-	app.controller('studentController', ['API', '$http', '$scope', '$q', '$window', function(API, $http, $scope, $q, $window){
+	app.directive('studentsPagination', function(){  
+	   	return{
+		    restrict: 'E',
+		    template: '<ul class="pagination">'+
+		    '<li class="" ng-show="vm.currentPage != 1"><a href="javascript:void(0)" ng-click="vm.getStudents(vm.currentPage-1)"><i class="material-icons">chevron_left</i></a></li>'+
+		    '<li ng-repeat="i in vm.range" ng-class="{active : vm.currentPage == i}" class="waves-effect">'+
+	            '<a href="javascript:void(0)" ng-click="vm.getStudents(i)">{{i}}</a>'+
+	        '</li>'+
+
+		     '<li ng-show="vm.currentPage != vm.totalPages"><a href="javascript:void(0)" ng-click="vm.getPosts(vm.currentPage+1)"><i class="material-icons">chevron_right</i></a></li>'+
+		       
+	      '</ul>',
+	      controller: 'studentController',
+	      controllerAs: 'vm'
+	   	};
+	});
+	app.controller('studentController', ['API', '$http', '$scope', '$q', '$window', '$timeout', function(API, $http, $scope, $q, $window, $timeout){
 			var vm = this;
+			//pagination
+		  	/*vm.totalPages = 0;
+		  	vm.currentPage = 1;
+		  	vm.range = [];*/
+		  	//end pagination
 			vm.dataLoading = true;
 			vm.viewAllStudents = true;
 			vm.sortTableConf = {
@@ -21,45 +42,70 @@
 		      $window.location.href = url;
 		    };
 		    vm.toggleViewAllStudents = function toggleViewAllStudents () {
-		    	vm.viewAllStudents = !vm.viewAllStudents;
-		    	vm.students = vm.studentsResp;
+		    	//vm.viewAllStudents = !vm.viewAllStudents;
+		    	//vm.students = vm.studentsResp;
+		    	if (!vm.viewAllStudents) {
+		    		vm.viewAllStudents = !vm.viewAllStudents;
+		    		vm.getStudents();
+		    	}
 		    }
 			//vm.alumnos = alumnos;
-			API.getStudents().then(function successCallback(response) {
-				vm.students = response.data;
-				$q.all(vm.students.map(function(student) {
-					student['info'] = {};
-		              return  $http({ method: 'GET', url: '/student/' + student.id + '/group' }).then(function  (response) {
-		                        var group = response.data.group;
-		                        var tutor = response.data.tutor;
-		                        if (group.id != 1) {
-		                           student.info['group'] = group;
-		                        }else{
-		                           student.info['group'] = {key: 'No asignado', id: group.id};
-		                        }
-		                        if (group.tutor_id != 1) {
-		                           	student.info['group']['tutor'] = tutor;
-		                        }else{
-		                           	student.info['group']['tutor'] = {name: 'No asignado'};
-		                        }
-		                         student.info['student'] = response.data.student;
-		                     });
-			         })).then(function() {
-							vm.dataLoading = false;
-			              vm.studentsResp = angular.copy(vm.students);
-			              /* filterData();   */
-			         });
-				console.log(vm.students);
-			}, function errorCallback(response) {
-				// called asynchronously if an error occurs
-				// or server returns response with an error status.
-			});
+			vm.getStudents = function getStudents (pageNumber, period) {
+				console.log('test');
+				if(pageNumber===undefined){
+			     	pageNumber = '1';
+			    }
+			    if (period === undefined) {
+			        period = '0';
+			      }
+				API.getStudents(pageNumber, period).then(function successCallback(response) {
+					vm.students = response.data.data;
+					vm.totalPages   = response.data.last_page;
+			      	vm.currentPage  = response.data.current_page;
+			      	
+			      	// Pagination Range
+			      	var pages = [];
+
+			      	for(var i=1;i<=response.data.last_page;i++) {          
+			        	pages.push(i);
+			      	}
+
+			      	vm.range = pages;
+					$q.all(vm.students.map(function(student) {
+						student['info'] = {};
+			              return  $http({ method: 'GET', url: '/student/' + student.user.id + '/group' }).then(function  (response) {
+			                        var group = response.data.group;
+			                        var tutor = response.data.tutor;
+			                        if (group.id != 1) {
+			                           student.info['group'] = group;
+			                        }else{
+			                           student.info['group'] = {key: 'No asignado', id: group.id};
+			                        }
+			                        if (group.tutor_id != 1) {
+			                           	student.info['group']['tutor'] = tutor;
+			                        }else{
+			                           	student.info['group']['tutor'] = {name: 'No asignado'};
+			                        }
+			                        
+			                     });
+				         })).then(function() {
+								vm.dataLoading = false;
+				             
+				              vm.studentsResp = angular.copy(vm.students);
+							    
+								//$scope.$apply();
+				              /* filterData();   */
+				         });
+					//console.log(vm.students);
+				});
+			}
+			vm.getStudents(); 
 			API.getPeriods().then(function successCallback(response) {
 					vm.periods = response.data;
 					vm.periods.forEach(function  (period) {
 						period.nameToDisplay = period.period + ' ' + period.year;
 					});
-					console.log(vm.periods);
+					/*console.log(vm.periods);*/
 				}, function errorCallback(response) {
 					// called asynchronously if an error occurs
 					// or server returns response with an error status.
@@ -82,11 +128,13 @@
 			}
 
 			vm.getDataForPeriod = function getDataForPeriod () {
+				//llammar a getStudents con el id del periodo
 				vm.viewAllStudents = false;
-				vm.students = vm.studentsResp;
+				vm.getStudents(1, vm.periodForData.id); 
+				/*vm.students = vm.studentsResp;
 				vm.students = vm.students.filter(function  (item) {
-					return item.info.student.period_id == vm.periodForData.id;
-				});
+					return item.period_id == vm.periodForData.id;
+				});*/
 			}
 
 

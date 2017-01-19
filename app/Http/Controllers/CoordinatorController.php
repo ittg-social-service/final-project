@@ -81,6 +81,7 @@ class CoordinatorController extends Controller
      */
     public function update(Request $request, $id)
     {
+     
        $toValidate = array(
                             'name' => 'bail|required',
                             'first_lastname' => 'bail|required',
@@ -91,7 +92,14 @@ class CoordinatorController extends Controller
         if ($user->email != $request->email) {
             $toValidate['email'] = 'bail|required|email|unique:users';
         }
-        
+        if ($user->username != $request->username) {
+            $toValidate['username'] = 'bail|required|unique:users';
+        }
+        if ($request->changePassword != null) {
+            $toValidate['password'] =  'bail|required|min:6|confirmed';
+            $toValidate['password_confirmation'] = 'bail|required|min:6';
+        }
+       /* dd($request);*/
         $this->validate($request, $toValidate);
 
         $avatar = "";
@@ -106,7 +114,10 @@ class CoordinatorController extends Controller
         }else{
             $avatar = $user->avatar;
         }
-
+        if ($request->changePassword != null){
+            $user->password = bcrypt($request->password);
+        }
+        $user->username = $request->username;
         $user->name = $request->name;
         $user->first_lastname = $request->first_lastname;
         $user->second_lastname = $request->second_lastname;

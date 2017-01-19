@@ -94,7 +94,7 @@ Route::group(['prefix' => 'coordinador','middleware' => ['auth', 'role:coordinat
 
 });
 
-Route::get('/student/list',  'StudentController@all');
+Route::get('/student/list/{period}',  'StudentController@all');
 Route::get('/student/list-for-period/{id}',  'StudentController@allInPeriod');
 Route::get('/student/{id}/group',  'StudentController@groupForStudent');
 Route::get('/group/list',  'GroupController@all');

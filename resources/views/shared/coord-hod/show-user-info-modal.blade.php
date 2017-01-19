@@ -6,10 +6,10 @@
 	      			<div class="col s21 m4 ">
 	      				<div class="row">
 	      					<div class="col s12 m12">
-	      						<img ng-src="@{{ vm.targetToEdit.avatar }}" alt="" class="circle center responsive-img">
+	      						<img ng-src="@{{ vm.targetToEdit.user.avatar }}" alt="" class="circle center responsive-img">
 	      					</div>
 	      					<div class="col m12 s12">
-	      						<h5 class="center">@{{ vm.targetToEdit.name + ' ' + vm.targetToEdit.first_lastname }}</h5>
+	      						<h5 class="center">@{{ vm.targetToEdit.user.name + ' ' + vm.targetToEdit.user.first_lastname + ' ' + vm.targetToEdit.user.second_lastname }}</h5>
 	      					</div>
 	      				</div>
 	      			</div>
@@ -25,15 +25,15 @@
 			      					<div class="row">
 			      						<div class="col s12 m12 user-info__field  valign-wrapper">
 			      							<i class="material-icons left">vpn_key</i>
-			      							@{{ vm.targetToEdit.username }}
+			      							@{{ vm.targetToEdit.user.username }}
 			      						</div>
 			      						<div class="col s12 m12 user-info__field valign-wrapper">
 			      							<i class="material-icons left">email</i>
-			      							@{{ vm.targetToEdit.email }}
+			      							@{{ vm.targetToEdit.user.email }}
 			      						</div>
 			      						<div class="col s12 m12 user-info__field valign-wrapper">
 			      							<i class="material-icons left">phone</i>
-			      							@{{ vm.targetToEdit.phone }}
+			      							@{{ vm.targetToEdit.user.phone }}
 			      						</div>
 			      					</div>
 			      				</div>

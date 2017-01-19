@@ -93,7 +93,13 @@ class HeadOfDepartmentController extends Controller
         if ($user->email != $request->email) {
             $toValidate['email'] = 'bail|required|email|unique:users';
         }
-        
+        if ($user->username != $request->username) {
+            $toValidate['username'] = 'bail|required|unique:users';
+        }
+        if ($request->changePassword != null) {
+            $toValidate['password'] =  'bail|required|min:6|confirmed';
+            $toValidate['password_confirmation'] = 'bail|required|min:6';
+        }
         $this->validate($request, $toValidate);
 
         $avatar = "";
@@ -108,7 +114,9 @@ class HeadOfDepartmentController extends Controller
         }else{
             $avatar = $user->avatar;
         }
-
+         if ($request->changePassword != null){
+            $user->password = bcrypt($request->password);
+        }
         $user->name = $request->name;
         $user->first_lastname = $request->first_lastname;
         $user->second_lastname = $request->second_lastname;

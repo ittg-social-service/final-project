@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+/*use Illuminate\Database\Eloquent\SoftDeletes;*/
 
 class Group extends Model
 {
+  /*use SoftDeletes;*/
   protected $table = 'groups';
+/*  protected $dates = ['deleted_at'];*/
   protected $fillable = [
     'key','tutor_id','period_id','coordinator_id',
   ];

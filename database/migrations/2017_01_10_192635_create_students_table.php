@@ -18,8 +18,8 @@ class CreateStudentsTable extends Migration
 
             $table->integer('period_id')->unsigned();
             $table->foreign('period_id')->references('id')->on('periods');
-            $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->integer('group_id')->unsigned()->nullable();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('career_id')->unsigned();
