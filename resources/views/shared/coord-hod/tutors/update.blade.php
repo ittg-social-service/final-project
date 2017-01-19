@@ -40,8 +40,8 @@
                     <label for="email" data-error="{{ $errors->first('email') }}">Email</label>  
                   </div>
                    <div class="input-field col m6 s12">
-                    <input type="text" value="{{ $target->nc }}" id="nc" name="nc" class="validate{{ $errors->has('nc') ? ' invalid' : '' }}">
-                    <label for="nc" data-error="{{ $errors->first('nc') }}">RFC</label>  
+                    <input type="text" value="{{ $target->username }}" id="username" name="username" class="validate{{ $errors->has('username') ? ' invalid' : '' }}">
+                    <label for="username" data-error="{{ $errors->first('username') }}">RFC</label>  
                   </div>
       
                   <div class="input-field col m6 s12 offset-m3">

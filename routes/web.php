@@ -119,4 +119,4 @@ Route::resource('tutor', 'TutorController');
 Route::resource('student', 'StudentController');
 
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');

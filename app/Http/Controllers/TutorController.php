@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Tutor;
 use App\User;
 use Auth;
+use Image;
 
 class TutorController extends Controller
 {
@@ -50,18 +51,18 @@ class TutorController extends Controller
             'name' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             'first_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             'second_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'nc' => 'bail|required|unique:users',
+            'username' => 'bail|required|unique:users',
         ]);
 
         $user = new User;
-        $user->nc = $request->nc;
+        $user->username = $request->username;
         $user->name = $request->name;
         $user->first_lastname = $request->first_lastname;
         $user->second_lastname = $request->second_lastname;
         $user->email = str_random(10).'@gmail.com';
         $user->phone = str_random(10);
         $user->avatar = '/img/avatars/default.png';
-        $user->password = bcrypt($request->nc);
+        $user->password = bcrypt($request->username);
         $user->role_id = 2;
         $user->save();
 
@@ -131,8 +132,8 @@ class TutorController extends Controller
         if ($user->email != $request->email) {
             $toValidate['email'] = 'bail|required|email|unique:users';
         }
-         if ($user->nc != $request->nc) {
-            $toValidate['nc'] = 'bail|required|unique:users';
+         if ($user->username != $request->username) {
+            $toValidate['username'] = 'bail|required|unique:users';
         }
         
         $this->validate($request, $toValidate);
@@ -141,7 +142,7 @@ class TutorController extends Controller
 
           if ($request->hasFile('avatar')) {
               $avatar = $request->file('avatar');
-              $fileName = Auth::user()->nc . '_'. $id . '.' . $avatar->getClientOriginalExtension();
+              $fileName = Auth::user()->username . '_'. $id . '.' . $avatar->getClientOriginalExtension();
               Image::make($avatar)->resize(300, 300)->save( public_path('/avatars/' . $fileName) );
               $avatar = '/avatars/' . $fileName;
           }else{
@@ -153,7 +154,7 @@ class TutorController extends Controller
           $user->first_lastname = ucfirst($request->first_lastname);
           $user->second_lastname = ucfirst($request->second_lastname);
           $user->email = $request->email;
-          $user->nc = $request->nc;
+          $user->username = $request->username;
           $user->avatar = $avatar;
           $user->phone = $request->phone;
           $user->save();

@@ -19,8 +19,8 @@
 		          	<label for="second_lastname" data-error="{{ $errors->first('second_lastname') }}">A.Materno</label>
 		        </div>
 		        <div class="input-field col s6 m12"> 
-		          <input id="nc" type="text" class="validate {{ $errors->has('nc') ? ' invalid' : 'valid' }}" name="nc" required>
-		          <label for="nc" data-error="{{ $errors->first('nc') }}">RFC</label>
+		          <input id="username" type="text" class="validate {{ $errors->has('username') ? ' invalid' : 'valid' }}" name="username" required>
+		          <label for="username" data-error="{{ $errors->first('username') }}">RFC</label>
 		        </div>
 	      		<button class="btn waves-effect waves-light col s12 m6 offset-m3" type="submit" name="action">Guardar
 	                <i class="material-icons right">send</i>

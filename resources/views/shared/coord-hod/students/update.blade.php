@@ -40,8 +40,8 @@
                     <label for="email" data-error="{{ $errors->first('email') }}">Email</label>  
                   </div>
                    <div class="input-field col m6 s12">
-                    <input type="text" value="{{ $target->nc }}" id="nc" name="nc" class="validate{{ $errors->has('nc') ? ' invalid' : '' }}">
-                    <label for="nc" data-error="{{ $errors->first('nc') }}">N.Control</label>  
+                    <input type="number" value="{{ $target->username }}" id="username" name="username" class="validate{{ $errors->has('username') ? ' invalid' : '' }}">
+                    <label for="username" data-error="{{ $errors->first('username') }}">N.Control</label>  
                   </div>
              {{--       <p>
 				      <input type="checkbox" id="test5" name="setPassword" />

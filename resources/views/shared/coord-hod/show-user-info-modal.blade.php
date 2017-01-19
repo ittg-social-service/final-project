@@ -25,7 +25,7 @@
 			      					<div class="row">
 			      						<div class="col s12 m12 user-info__field  valign-wrapper">
 			      							<i class="material-icons left">vpn_key</i>
-			      							@{{ vm.targetToEdit.nc }}
+			      							@{{ vm.targetToEdit.username }}
 			      						</div>
 			      						<div class="col s12 m12 user-info__field valign-wrapper">
 			      							<i class="material-icons left">email</i>
