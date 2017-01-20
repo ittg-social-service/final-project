@@ -20,6 +20,7 @@
               </th>
               <th data-field="name">Actividad</th>
               <th data-field="date">Fecha límite de entrega</th>
+
               <th data-field="action">Acción</th>
           </tr>
         </thead>
@@ -32,14 +33,15 @@
                 @endif
               </td>
               <td>
-                {{str_limit($activity->title, 25)}}</td>
+
+                {{str_limit($activity->titlee, 25)}}</td>
               <td>
                 <i class="material-icons">restore</i>-
                 {{str_limit($activity->finish_date, 11)}}
 
               </td>
               <td>
-                <a href="activity/{{$activity->id}}/homework/{{$activity->id_activity_tutor}}" class="btn-floating cyan tooltipped green" data-position="top" data-delay="40" data-tooltip="Ver detalles">
+                <a href="activity/{{$activity->activity_id}}/homework/{{$activity->id}}" class="btn-floating cyan tooltipped green" data-position="top" data-delay="40" data-tooltip="Ver detalles">
                   <i class="material-icons">assignment</i>
                 </a>
               </td>

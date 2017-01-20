@@ -54,7 +54,8 @@ class StatisticsController extends Controller
       $group_id = $id;
       $t_students = Group::find($id)->students->count();
       $tutor_id = Auth::user()->tutor->id;
-      $activities = Tutor::find($tutor_id)->activities()->where('group_id', $id)->get();
+      $activities1 = Tutor::find($tutor_id)->activities()->where('group_id', $id)->get();
+      $activities = ActivityTutor::where([['tutor_id',$tutor_id],['group_id', $id]])->get();
       return view('teacher.statistics.show',compact('activities','t_students','group_id'));
     }
 

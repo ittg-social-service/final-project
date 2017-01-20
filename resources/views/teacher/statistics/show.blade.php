@@ -16,7 +16,7 @@
           @foreach ($activities as $activity)
             <tr>
               <th>
-                {{str_limit($activity->title,25)}}
+                {{str_limit($activity->titlee,25)}}
               </th>
               <th>
                 {{$activity->total}}/{{$t_students}}

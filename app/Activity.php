@@ -11,9 +11,9 @@ class Activity extends Model
   {
     return $this->belongsToMany('App\Tutor')->withPivot('enabled', 'finish_date');
   }
-  public function getTotalAttribute()
+  public function getTotalAttribute($id)
   {
-    return Homework::where([['activity_id',$this->id],['status',1]])->count();
+    return Homework::where([['activity_id',$this->id],['status',1],['group_id',$id]])->count();
   }
 
 

@@ -37,4 +37,15 @@ class ActivityTutor extends Model
   {
     return Homework::where([['activity_id',$this->activity_id],['status',1],['group_id',$this->group_id]])->count();
   }
+
+  public function getTitleeAttribute()
+  {
+    $final_title = Activity::find($this->activity_id);
+    return $final_title->title;
+  }
+
+  public function getStatusAttribute()
+  {
+    
+  }
 }
