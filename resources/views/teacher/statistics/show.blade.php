@@ -1,11 +1,14 @@
 @extends('layouts.teacher-dashboard')
 @section('teacher-dash-content')
-    <h4>Tareas activadas:</h4>
-    <table class="striped">
+    <h4>Reporte de actividades</h4>
+    <h5>
+      Total de alumnos: {{$t_students}}
+    </h5>
+    <table class="striped ">
         <thead>
           <tr>
               <th data-field="title">Actividad</th>
-              <th data-field="description">Entregados/Total</th>
+              <th data-field="description">Entregados</th>
               <th data-field="options">% de participiacón</th>
           </tr>
         </thead>
@@ -13,13 +16,17 @@
           @foreach ($activities as $activity)
             <tr>
               <th>
-                {{$activity->title}}
+                {{str_limit($activity->title,25)}}
               </th>
               <th>
                 {{$activity->total}}/{{$t_students}}
               </th>
               <th>
-                <span class="blue-text">{{(100/$t_students) *$activity->total}}%</span>
+                <span class="blue-text">
+                  @if ($t_students>0)
+                    {{str_limit((100/$t_students) *$activity->total, 5)}}%
+                  @endif
+                </span>
               </th>
             </tr>
           @endforeach

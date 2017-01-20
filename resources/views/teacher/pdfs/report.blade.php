@@ -33,6 +33,9 @@
     <header>
       <h1>Instituto Tecnológico de Tuxtla Gutierrez</h1>
       <h2>Reporte - Tareas asignadas : {{$group->key}}-{{$group->period->period}}/{{$group->period->year}}</h2>
+      <h3>
+        Total de alumnos: {{$t_students}}
+      </h3>
     </header>
 
     <div class="container">
@@ -52,13 +55,13 @@
           @foreach ($activities as $activity)
             <tr>
               <th>
-                {{$activity->title}}
+                {{str_limit($activity->title,25)}}
               </th>
               <th>
                 {{$activity->total}}/{{$t_students}}
               </th>
               <th>
-                <span>{{(100/$t_students) *$activity->total}}%</span>
+                <span>{{str_limit((100/$t_students) *$activity->total, 5)}}%</span>
               </th>
             </tr>
           @endforeach

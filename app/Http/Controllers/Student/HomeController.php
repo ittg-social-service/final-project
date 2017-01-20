@@ -17,19 +17,20 @@ use App\Tutor;
 use App\Student;
 use App\Career;
 use Image;
-
+use Carbon\Carbon;
 class HomeController extends Controller
 {
     public function index(){
+      $now = Carbon::now();
       $group_id = Auth::user()->student->group->id;
       $activities = DB::table('activity_tutor')
             ->join('activities', 'activity_tutor.activity_id', '=', 'activities.id')
-            ->select('activities.*','activity_tutor.id as id_activity_tutor')
+            ->select('activities.*','activity_tutor.id as id_activity_tutor','activity_tutor.finish_date')
             ->where('activity_tutor.group_id','=',$group_id)
             ->orderBy('activity_tutor.created_at', 'desc')
             ->paginate(6);
 
-      return view('student.home',['activities'=>$activities]);
+      return view('student.home',['activities'=>$activities,'now'=>$now]);
     }
     public function information($id)
     {
