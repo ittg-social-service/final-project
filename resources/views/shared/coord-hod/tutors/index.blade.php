@@ -2,8 +2,11 @@
    <div ng-app="tutor">
       <div ng-controller="tutorController as vm">
         	<div class="row">
-      		<div class="col m12 s12">
+      		<div class="col m8 s12">
         			@include('shared.searchbar')
+      		</div>
+      		<div class="col s12 m3">
+      			<a class="btn btn-flat " ng-click="vm.makeMeTutor()">Matricularme como tutor</a>
       		</div>
       	</div>
         	<div class="row">
@@ -76,11 +79,14 @@
 		         </table>
         		</div>
         	</div>
+        @if (Auth::user()->hasRole('department_manager'))
+        	
          <div class="fixed-action-btn">
           <a class="btn-floating btn-large red"  href="{{ url('/tutor/create') }}">
             <i class="large material-icons">add</i>
           </a>
         </div>
+        @endif
 
          <!-- Modal Structure -->
 	 	<div id="student-info-modal" class="modal modal-fixed-footer">
@@ -109,7 +115,7 @@
 			      					<div class="row">
 			      						<div class="col s12 m12 user-info__field  valign-wrapper">
 			      							<i class="material-icons left">vpn_key</i>
-			      							@{{ vm.targetToEdit.nc }}
+			      							@{{ vm.targetToEdit.username }}
 			      						</div>
 			      						<div class="col s12 m12 user-info__field valign-wrapper">
 			      							<i class="material-icons left">email</i>

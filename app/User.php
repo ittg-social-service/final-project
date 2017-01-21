@@ -17,7 +17,6 @@ class User extends Authenticatable
     protected $fillable = [
         'nc','name','first_lastname','second_lastname','email','phone','password',
         'avatar',
-        'role_id',
     ];
 
     /**
@@ -49,4 +48,16 @@ class User extends Authenticatable
       return $this->hasOne('App\Coordinator');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+  	public function hasRole($rol)
+  {
+      return ! $this->roles->filter(function($role) use ($rol)
+    	{
+       	return $role->type == $rol;
+    	})->isEmpty();
+  }
 }

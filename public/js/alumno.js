@@ -1,22 +1,6 @@
 
 (function () {
 	var app = angular.module('student', ['common', 'ngMessages']);
-	app.directive('studentsPagination', function(){  
-	   	return{
-		    restrict: 'E',
-		    template: '<ul class="pagination">'+
-		    '<li class="" ng-show="vm.currentPage != 1"><a href="javascript:void(0)" ng-click="vm.getStudents(vm.currentPage-1)"><i class="material-icons">chevron_left</i></a></li>'+
-		    '<li ng-repeat="i in vm.range" ng-class="{active : vm.currentPage == i}" class="waves-effect">'+
-	            '<a href="javascript:void(0)" ng-click="vm.getStudents(i)">{{i}}</a>'+
-	        '</li>'+
-
-		     '<li ng-show="vm.currentPage != vm.totalPages"><a href="javascript:void(0)" ng-click="vm.getPosts(vm.currentPage+1)"><i class="material-icons">chevron_right</i></a></li>'+
-		       
-	      '</ul>',
-	      controller: 'studentController',
-	      controllerAs: 'vm'
-	   	};
-	});
 	app.controller('studentController', ['API', '$http', '$scope', '$q', '$window', '$timeout', function(API, $http, $scope, $q, $window, $timeout){
 			var vm = this;
 			//pagination
@@ -41,6 +25,7 @@
 		      var url = '/student/'+id+'/edit';
 		      $window.location.href = url;
 		    };
+		    
 		    vm.toggleViewAllStudents = function toggleViewAllStudents () {
 		    	//vm.viewAllStudents = !vm.viewAllStudents;
 		    	//vm.students = vm.studentsResp;

@@ -15,31 +15,30 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, $rol)
     {
-       // $role = Role::find($request->user()->role_id);
-       if ($request->user()->role->type != $rol) {
-            switch ($request->user()->role->type) {
-                case 'student':
-                    return redirect('/student/home');   
-                    break;
-                case 'tutor':
-                    return redirect('/teacher/groups');   
-                    break;
-                case 'department_manager':
-                    return redirect('/jefe-departamento/alumnos');   
-                    break;
-                case 'coordinator':
-                    return redirect('/coordinador/grupos');   
-                    break;
-                
-                default:
-                    # code...
-                    break;
+        if ($request->user()->hasRole($rol)) {
+            return $next($request);
+        }else{
+            foreach ($request->user()->roles as $role) {
+                switch ($role->type) {
+                    case 'student':
+                        return redirect('/student/home');   
+                        break;
+                    case 'tutor':
+                        return redirect('/teacher/groups');   
+                        break;
+                    case 'department_manager':
+                        return redirect('/jefe-departamento/alumnos');   
+                        break;
+                    case 'coordinator':
+                        return redirect('/coordinador/grupos');   
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+                }
             }
         }
-       /* else{
-            //redireccionar al home de cada tipo de usuario
-            return redirect('/home');  
-        }*/
-        return $next($request);
+
     }
 }

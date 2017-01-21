@@ -1,7 +1,7 @@
 
 (function () {
    var app = angular.module('tutor', ['common']);
-  	app.controller('tutorController', [ 'API', '$window', function(API, $window){
+  	app.controller('tutorController', [ 'API', '$window', '$http', function(API, $window, $http){
       	var vm = this;
       	vm.sortTableConf = {
 			sortType: 'name',
@@ -18,9 +18,32 @@
 	      var url = '/tutor/'+id+'/edit';
 	      $window.location.href = url;
 	    };
-      	API.getTutors().then(function successCallback(response) {
-         	vm.tutors = response.data;
-        });
+	    var getTutors = function getTutors () {
+	    	
+	      	API.getTutors().then(function successCallback(response) {
+	         	vm.tutors = response.data;
+	        });
+	    }
+	    getTutors();
+        vm.makeMeTutor = function makeMeTutor () {
+		    	$http({ 
+			        method: 'POST',
+			        url: '/tutor',
+			          headers: {
+			              'X-CSRF-TOKEN': API.token
+			            },
+			          data: {hod:'hod'} 
+			    }).then(function  (response) {
+			    	if (response.data.status == '1') {
+			    	
+			    		API.makeToast('Se ha matriculado correctamente');
+			    		getTutors();
+			    	}else{
+			    		API.makeToast('Usted ya se encuentra matriculado');
+
+			    	}
+			    });
+		    }
   	}]);
 })();
 

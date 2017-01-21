@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tutor;
 use App\User;
+use App\RoleUser;
 use Auth;
 use Image;
 
@@ -32,11 +33,14 @@ class TutorController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->role->type == 'department_manager') {
+       
+
+        if (Auth::user()->hasRole('department_manager')) {
             return view('HeadOfDepartment.tutors.create');
         }else{
             return view('coordinator.tutors.create');
         }
+        
     }
 
     /**
@@ -47,38 +51,53 @@ class TutorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'first_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'second_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'username' => 'bail|required|unique:users',
-        ]);
+        if ($request->has('hod')) {
+            $login_user = Auth::user();
+            if ($login_user->tutor) {
+                 return response()->json(['status' => '0']);
+            }
+            $role_user = new RoleUser;
+            $role_user->user_id = $login_user->id;
+            $role_user->role_id = 2;
+            $tutor = new Tutor;
+            $role_user->save();
+            $tutor->user_id = $login_user->id;
+            $tutor->department_manager_id = $login_user->department_manager->id;
+            $tutor->save();
+            return response()->json(['status' => '1']);
+        }else{
+            $this->validate($request, [
+                'name' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+                'first_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+                'second_lastname' => 'bail|required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+                'username' => 'bail|required|unique:users',
+            ]);
 
-        $user = new User;
-        $user->username = $request->username;
-        $user->name = $request->name;
-        $user->first_lastname = $request->first_lastname;
-        $user->second_lastname = $request->second_lastname;
-        $user->email = str_random(10).'@gmail.com';
-        $user->phone = str_random(10);
-        $user->avatar = '/img/avatars/default.png';
-        $user->password = bcrypt($request->username);
-        $user->role_id = 2;
-        $user->save();
+            $user = new User;
+            $user->username = $request->username;
+            $user->name = $request->name;
+            $user->first_lastname = $request->first_lastname;
+            $user->second_lastname = $request->second_lastname;
+            $user->email = str_random(10).'@gmail.com';
+            $user->phone = str_random(10);
+            $user->avatar = '/img/avatars/default.png';
+            $user->password = bcrypt($request->username);
+            $user->save();
 
-        $tutor = new Tutor;
-        $tutor->user_id = $user->id;
-        
+            $role_user = new RoleUser;
+            $role_user->user_id = $user->id;
+            $role_user->role_id = 2;
+            $role_user->save();
 
-        if (Auth::user()->role->type == 'department_manager') {
+            $tutor = new Tutor;
+            $tutor->user_id = $user->id;
+            
             $tutor->department_manager_id = Auth::user()->department_manager->id;
             $tutor->save();
             return redirect('/jefe-departamento/tutores/crear')->with('status', 'Tutor Guardado exitosamente');
-        }else{
-            $tutor->department_manager_id = Auth::user()->coordinator->id;
-            $tutor->save();
-            return redirect('/coordinador/tutores/crear')->with('status', 'Tutor Guardado exitosamente');;
+
         }
+        
     }
 
     /**
@@ -103,13 +122,13 @@ class TutorController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-/*        $periods = Period::all();
-        $period = $user->student->period;*/
-        if (Auth::user()->role->type == 'department_manager') {
+
+        if (Auth::user()->hasRole('department_manager')) {
             return view('HeadOfDepartment.tutors.update', ['target' => $user]);
         }else{
             return view('coordinator.tutors.update', ['target' => $user]);
         }
+        
     }
 
     /**
@@ -158,11 +177,14 @@ class TutorController extends Controller
           $user->avatar = $avatar;
           $user->phone = $request->phone;
           $user->save();
-        if (Auth::user()->role->type == 'department_manager') {
+        
+
+        if (Auth::user()->hasRole('department_manager')) {
             return redirect('/jefe-departamento/tutores')->with('status', 'Informacion del tutor actualizada');
         }else{
             return redirect('/coordinador/tutores')->with('status', 'Informacion del tutor actualizada');;
         }
+          
     }
 
     /**
