@@ -10,6 +10,7 @@
 
 body{
   background: #fafafa;
+  color: #676565;
 }
 .main{
     width: 100%;
@@ -21,6 +22,10 @@ body{
 .photo{
 	width: 35px;
 	height: 35px;
+  vertical-align: middle;
+}
+.landing-user__photo{
+  margin-right: 10px;
 }
 
 

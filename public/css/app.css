@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 body {
   background: #fafafa;
+  color: #676565;
 }
 
 .main {
@@ -13,6 +14,11 @@ body {
 .photo {
   width: 35px;
   height: 35px;
+  vertical-align: middle;
+}
+
+.landing-user__photo {
+  margin-right: 10px;
 }
 
 @media only screen and (max-width: 992px) {
