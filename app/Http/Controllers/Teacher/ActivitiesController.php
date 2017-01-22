@@ -42,7 +42,7 @@ class ActivitiesController extends Controller
      */
     public function store(StoreHomework $request)
     {
-
+        flash('Hecho.', 'success');
         ActivityTutor::create([
             'activity_id' => $request->activity_id,
             'tutor_id' => $request->teacher_id,
@@ -91,6 +91,7 @@ class ActivitiesController extends Controller
         $activity = ActivityTutor::findOrFail($id);
         $activity->finish_date = $request->finish_date;
         $activity->save();
+        flash('Hecho.', 'success');
 
         return redirect('teacher/groups');
     }

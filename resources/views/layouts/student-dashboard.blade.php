@@ -69,6 +69,7 @@
       </div>
       <div id="main-content">
         <div class="container">
+            @include('flash::message')
             @yield('student-dash-content')
 
         </div>

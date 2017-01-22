@@ -8,13 +8,13 @@
 
 <!-- Dropdown Structure -->
 <ul id='dropdown1' class='dropdown-content'>
-  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/1">1ero</a></li>
+  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/1" class="blue-text text-darken-4">1ero</a></li>
   <li class="divider"></li>
-  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/2">2do</a></li>
+  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/2" class="blue-text text-darken-4">2do</a></li>
   <li class="divider"></li>
-  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/3">3ro</a></li>
+  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/3" class="blue-text text-darken-4">3ro</a></li>
   <li class="divider"></li>
-  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/4">4to</a></li>
+  <li><a href="{{url('teacher/group')}}/{{$group_id}}/activities/4" class="blue-text text-darken-4">4to</a></li>
 </ul>
 
     <table class="highlight">
@@ -31,10 +31,9 @@
               <td>{{$activity->title}}</td>
               <td>{{$activity->description}}</td>
               <td>
-                <a class="waves-effect waves-light btn blue darken-4" href="{{url('teacher/group/')}}/{{$group_id}}/activity/{{$activity->id}}">
-                  <i class="material-icons">alarm_on</i>
-                  Habilitar
-                </a>
+                
+                <a href="{{url('teacher/group/')}}/{{$group_id}}/activity/{{$activity->id}}" class="btn-floating cyan tooltipped green" data-position="top" data-delay="50" data-tooltip="Activar"><i class="material-icons">alarm_on</i></a>
+
               </td>
             </tr>
 

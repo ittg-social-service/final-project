@@ -8,6 +8,7 @@ use App\Group;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Tutor;
+use App\ActivityTutor;
 class PdfsController extends Controller
 {
   public function Makepdf($id)
@@ -22,11 +23,12 @@ class PdfsController extends Controller
   }
   public function statisticsPdf($id)
   {
+    $group_id = $id;
     $group = Group::find($id);
     $t_students = Group::find($id)->students->count();
     $tutor_id = Auth::user()->tutor->id;
-    $activities = Tutor::find($tutor_id)->activities()->where('group_id', $id)->get();
-    //return view('teacher.statistics.show',compact('activities','t_students','group_id'));
+    $activities1 = Tutor::find($tutor_id)->activities()->where('group_id', $id)->get();
+    $activities = ActivityTutor::where([['tutor_id',$tutor_id],['group_id', $id]])->get();
 
     $pdf = \PDF::loadView('teacher.pdfs.report',['group'=>$group,'t_students'=>$t_students,'activities'=>$activities]);
     return  $pdf->stream('report.pdf');

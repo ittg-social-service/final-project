@@ -60,7 +60,7 @@ class HomeController extends Controller
 
       $user->save();
 
-
+      flash('Hecho.', 'success');
       return redirect('teacher/groups');
 
 

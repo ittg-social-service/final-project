@@ -6,11 +6,18 @@
       </p>
     @endif
 
-    <ul class="collection with-header">
+    <ul class="collection with-header z-depth-2">
       <li class="collection-header"><h4>Material para el profesor</h4></li>
       <li class="collection-item">
         <div>Manual del tutor
-          <a href="{{url('/pdf/manual_tutor.pdf')}}" class="secondary-content blue-text darken-4"  >
+          <a href="{{url('/pdf/manual_tutor.pdf')}}" class="secondary-content blue-text text-darken-4"  >
+            Descargar <i class="fa fa-cloud-download" aria-hidden="true"></i>
+          </a>
+        </div>
+      </li>
+      <li class="collection-item">
+        <div>Plan de acción tutorial 1er semestre.
+          <a href="{{url('/pdf/plan_accion_tutorial.pdf')}}" class="secondary-content blue-text text-darken-4"  >
             Descargar <i class="fa fa-cloud-download" aria-hidden="true"></i>
           </a>
         </div>

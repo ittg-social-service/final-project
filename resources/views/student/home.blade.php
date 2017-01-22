@@ -9,6 +9,13 @@
         </a>
       </div>
     </li>
+    <li class="collection-item">
+        <div>Plan de acción tutorial 1er semestre.
+          <a href="{{url('/pdf/plan_accion_tutorial.pdf')}}" class="secondary-content blue-text text-darken-4"  >
+            Descargar <i class="fa fa-cloud-download" aria-hidden="true"></i>
+          </a>
+        </div>
+      </li>
   </ul>
   <h3>Mis actividades:</h3>
     <div class="row">

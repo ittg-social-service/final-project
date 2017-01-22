@@ -78,6 +78,7 @@ class HomeworksController extends Controller
         $homework = homework::findOrFail($id);
         $homework->status = 1;
         $homework->save();
+        flash('Hecho.', 'success');
         return back();
     }
 

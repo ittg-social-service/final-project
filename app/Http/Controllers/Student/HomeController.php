@@ -81,7 +81,7 @@ class HomeController extends Controller
         $student->career_id = $request->career_id;
         $student->save();
       }
-
+      flash('Hecho.', 'success');
       return redirect('student/home');
 
 

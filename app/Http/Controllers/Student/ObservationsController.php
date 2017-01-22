@@ -79,6 +79,7 @@ class ObservationsController extends Controller
 
         $observation->file = $path;
         $observation->save();
+        flash('Hecho.', 'success');
         return back();
 
     }

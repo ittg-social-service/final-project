@@ -37,6 +37,19 @@
              <span>Mi Información</span>
              </a>
          </li>
+         @foreach(Auth::user()->roles as $role)
+                  @if($role->pivot->role_id==3)
+                    <li>
+                     <a class="lime-text accent-3"  href="{{url('/jefe-departamento/alumnos')}}">
+                       <i class="material-icons">autorenew</i>
+                       <span>
+                          Panel Jefe D.
+                       </span>
+                       </a>
+                   </li>
+                  @endif
+                @endforeach
+         
           <li>
              <a class="lime-text accent-3" href="{{ route('logout') }}" onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
@@ -55,7 +68,7 @@
 
       <div id="main-content">
         <div class="container">
-
+            @include('flash::message')
             @yield('teacher-dash-content')
 
         </div>

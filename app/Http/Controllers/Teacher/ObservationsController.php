@@ -82,6 +82,7 @@ class ObservationsController extends Controller
       }
       $observation->save();
       $ruta = 'teacher/homeworks/'.$id;
+      flash('Hecho.', 'success');
       return redirect($ruta);;
     }
 

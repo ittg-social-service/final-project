@@ -56,7 +56,7 @@ class ActivitiesController extends Controller
            'file' => $path,
         ]);
 
-
+        flash('Hecho.', 'success');
         return redirect('student/home');
     }
 
