@@ -20,17 +20,17 @@ class RoleMiddleware
         }else{
             foreach ($request->user()->roles as $role) {
                 switch ($role->type) {
-                    case 'student':
-                        return redirect('/student/home');   
-                        break;
-                    case 'tutor':
-                        return redirect('/teacher/groups');   
-                        break;
                     case 'department_manager':
                         return redirect('/jefe-departamento/alumnos');   
                         break;
                     case 'coordinator':
                         return redirect('/coordinador/grupos');   
+                        break;
+                    case 'student':
+                        return redirect('/student/home');   
+                        break;
+                    case 'tutor':
+                        return redirect('/teacher/groups');   
                         break;
                     
                     default:
