@@ -8,10 +8,10 @@
 			<!-- nuestro instituto dropdown -->
 			<ul id="dropdown-landing" class="dropdown-content">
 			  <li><a href="{{ url('/quienes-somos') }}">Quienes somos</a></li>
-			  <li><a href="#!">Mensaje del director</a></li>
-			  <li class="divider"></li>
-			  <li><a href="#!">three</a></li>
-			</ul>
+{{-- 			  <li><a href="#!">Mensaje del director</a></li>
+ --}}			  <li class="divider"></li>
+{{-- 			  <li><a href="#!">three</a></li>
+ --}}			</ul>
 			<!-- Dropdown Structure if user is loged in -->
 			<ul id="dropdown-user-info" class="dropdown-content">
 			  	<li>
@@ -42,9 +42,9 @@
 							<i class="material-icons right">arrow_drop_down</i>
 						</a>
 					</li>
-					<li><a href="#">Components</a></li>
+{{-- 					<li><a href="#">Components</a></li>
 					<li><a href="#">JavaScript</a></li>
-				</ul>
+ --}}				</ul>
 			    <ul class="right hide-on-med-and-down red-text">
 			      	@if (Auth::guest())
 			      		<li><a href="{{ url('/login') }}" class="btn light-blue white-text">Acceso</a></li>
@@ -72,9 +72,9 @@
 					              	<ul>
 					                	<li><a href="{{ url('/nosotros') }}">Quienes somos</a></li>
 			  							<li><a href="#!">Mensaje del director</a></li>
-					                	<li><a href="#!">Third</a></li>
+{{-- 					                	<li><a href="#!">Third</a></li>
 					                	<li><a href="#!">Fourth</a></li>
-					              	</ul>
+ --}}					              	</ul>
 					            </div>
 				          </li>
 				        </ul>
@@ -111,8 +111,8 @@
 					        </ul>
 				   	 	</li>
 	                @endif
-				    <li><a href="{{ url('/') }}">Inicio</a></li>
-			    </ul>
+{{-- 				    <li><a href="{{ url('/') }}">Inicio</a></li>
+ --}}			    </ul>
 		    </div>
 		  </nav>
 		</div>
