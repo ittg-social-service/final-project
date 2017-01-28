@@ -78,6 +78,10 @@ body {
   z-index: 10;
 }
 
+.footer {
+  color: red !important;
+}
+
 #delete-group-modal {
   width: 300px !important;
 }

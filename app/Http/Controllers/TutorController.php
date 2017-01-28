@@ -59,10 +59,10 @@ class TutorController extends Controller
             $role_user = new RoleUser;
             $role_user->user_id = $login_user->id;
             $role_user->role_id = 2;
-            $tutor = new Tutor;
             $role_user->save();
+            $tutor = new Tutor;
             $tutor->user_id = $login_user->id;
-            $tutor->department_manager_id = $login_user->department_manager->id;
+            $tutor->department_manager_id = 2;
             $tutor->save();
             return response()->json(['status' => '1']);
         }else{
