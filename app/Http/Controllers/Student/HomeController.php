@@ -49,8 +49,8 @@ class HomeController extends Controller
       if ($request->hasFile('avatar')) {
           $avatar = $request->file('avatar');
           $fileName = Auth::user()->username. '_'. $id . '.' . $avatar->getClientOriginalExtension();
-          Image::make($avatar)->resize(250, 150)->save( public_path('avatars/' . $fileName) );
-          $avatar = 'avatars/' . $fileName;
+          Image::make($avatar)->resize(250, 150)->save( public_path('/avatars/' . $fileName) );
+          $avatar = '/avatars/' . $fileName;
       }else{
           $avatar = $user->avatar;
       }

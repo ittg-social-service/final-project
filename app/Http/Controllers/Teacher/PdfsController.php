@@ -15,7 +15,7 @@ class PdfsController extends Controller
   {
     $students= Group::find($id)->students;
     $info_group = DB::table('groups')->where('groups.id', $id)
-                                      ->join('periods','groups.id','=','periods.id')
+                                      ->join('periods','groups.period_id','=','periods.id')
                                       ->select('groups.key','periods.period','periods.year')
                                       ->first();
     $pdf = \PDF::loadView('teacher.pdfs.group-pdf',['info_group'=>$info_group,'students'=>$students]);

@@ -15,7 +15,7 @@
          <ul id="out" class="side-nav fixed z-depth-1">
             <div class="client-info">
                <div class="">
-                  <img src="{{url('/')}}/{{Auth::user()->avatar}}" alt="" class="avatar">
+                  <img src="{{url('/')}}{{Auth::user()->avatar}}" alt="" class="avatar">
                </div>
                <div>
                   <a class="dropdown-button client-name lime-text accent-3" data-activates='client-opts'>{{ Auth::user()->name }} <i class="tiny material-icons"></i></a>
