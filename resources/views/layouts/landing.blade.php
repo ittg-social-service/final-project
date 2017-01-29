@@ -16,7 +16,7 @@
 
       <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-      <link rel="stylesheet" href="/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
 
       <script type="text/javascript" src="/js/init.js"></script>
    </head>
@@ -43,22 +43,22 @@
                 <ul>
                   <li>
                      <a class=" blue-text text-darken-4" href="http://facebook.com/radiotec.tuxtla" target="_blank"> 
-                        <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                        <i class="fa fa-facebook-official fa-lg" aria-hidden="true"></i>
                      </a>
                   </li>
                   <li>
                      <a class="ight-blue-text text-lighten-1 href="https://twitter.com/TecTuxtla" target="_blank">
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                        <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
                      </a>
                   </li>
                   <li>
                      <a class="grey-text text-darken-3" href="http://mail.ittg.edu.mx/" target="_blank">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
                      </a>
                   </li>
                    <li>
                      <a class="red-text" href="https://www.youtube.com/channel/UCFKQoopRmmH71Mm3sNbwa7w" target="_blank">
-                        <i class="fa fa-youtube-square" aria-hidden="true"></i>
+                        <i class="fa fa-youtube-square fa-lg" aria-hidden="true"></i>
                      </a>
                   </li>
                 </ul>
