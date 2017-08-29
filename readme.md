@@ -1,27 +1,41 @@
-# Laravel PHP Framework
+# Deploy - Cpanel
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+1. Download the zip file of this project to your computer
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+2. Then Upload the file(zip) of the project to your account on Cpanel.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+3. In your root directory of Cpanel, Decompress the zip file.
 
-## Official Documentation
+4. After Decompress the zip file you need to move all the files inside of 'public' folder to 'public_html' folder
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+5. Then, edit 'index.php' file, this file must to be inside 'public_html' folder, change the path in this line, as the follow:
 
-## Contributing
+     ```require __DIR__.'/changeThePathuntilthecorrectpathTo/bootstrap/autoload.php';```
+    &nbsp; and this line too: &nbsp;
+    ```$app = require_once __DIR__.'/changeThePathuntilthecorrectpathTo/bootstrap/app.php';```
+    >Note: The 'changeThePath' needs to be changed to the correct path to read the app.php file.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+At this point, you must to have a database with the correct credentials, I mean, The database needs to be created with the SQl script file, the file was named 'tutorias.sql' and it's inside of this project folder.
 
-## Security Vulnerabilities
+Finally, It's necesary create a file named '.env', in this file you are goint to write the correct credentials to use the database created prviously,
+  >In this project there is a file named ".env.example", you can copy and paste this file and then modify it
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
-## License
+You need to change only in this part of the file:
+Example:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+###### APP_NAME=Laravel
+###### APP_ENV=production -- this line needs to be changed from "local" to "production"
+###### APP_KEY=base64:FjC2P4LO/4MUXs32aNRrE/trWybCCx42gx9y0HS/uwI=
+###### APP_DEBUG=false  -- this line needs to be changed from "true" to "false"
+###### APP_LOG_LEVEL=debug
+###### APP_URL=http://localhost
+
+#### At this section of the file you need to write your credentials for your database.
+
+###### DB_CONNECTION=mysql
+###### DB_HOST=localhost
+###### DB_PORT=3306
+###### DB_DATABASE=CHANGETHISEDATABASENAME
+###### DB_USERNAME=CHANGETHISUSERNAME
+###### DB_PASSWORD=CHAMGETHISPASSWORD
