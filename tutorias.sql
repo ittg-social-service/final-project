@@ -17,7 +17,7 @@
 
 --
 -- DATABASE CREATION
--- NOTE: CHANGE THE NAME OF THE DB IF IS REQUIRED 
+-- NOTE: CHANGE THE NAME OF THE DB IF IS REQUIRED
 
 CREATE DATABASE tutoriasittg;
 USE tutoriasittg;
@@ -513,7 +513,7 @@ CREATE TABLE `users` (
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `first_lastname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `second_lastname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
